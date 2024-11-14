@@ -1,21 +1,27 @@
 export const fetchGeolocation = async (
   cityName: string,
-  state: string,
-  country: string,
+  state?: string, // Make state optional
+  country?: string, // Make country optional
 ): Promise<{ lat: number; lon: number }[]> => {
-  // Specify the return type
   const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
   const GEOLOCATIONURL = "https://api.openweathermap.org/geo/1.0/direct?";
 
-  if (!cityName || !state || !country) {
-    console.log("Please provide valid city, state, and country values.");
+  if (!cityName) {
+    console.log("Please provide a valid city value.");
     return []; // Ensure this returns an array type, even if empty
   }
 
+  // Construct the query string dynamically
+  let query = `${cityName}`;
+  if (state) {
+    query += `,${state}`;
+  }
+  if (country) {
+    query += `,${country}`;
+  }
+
   try {
-    const response = await fetch(
-      `${GEOLOCATIONURL}q=${cityName},${state},${country}&appid=${APIKEY}`,
-    );
+    const response = await fetch(`${GEOLOCATIONURL}q=${query}&appid=${APIKEY}`);
     const data = await response.json();
     console.log("Geolocation Response:", data);
     return data; // Ensure this returns the data properly
@@ -38,5 +44,21 @@ export const fetchWeather = async (lat: number, lon: number) => {
     return data; // Returns the weather data
   } catch (e) {
     console.error("Error fetching weather data:", e);
+  }
+};
+
+export const fetch5DaysForeCast = async (lat: number, lon: number) => {
+  const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
+  const FORECASTURL = "https://api.openweathermap.org/data/2.5/forecast/daily?";
+
+  try {
+    const response = await fetch(
+      `${FORECASTURL}lat=${lat}&lon=${lon}&cnt=5&appid=${APIKEY}&units=metric`,
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.error("Error fetching 5 day weather forecast data:", e);
   }
 };
