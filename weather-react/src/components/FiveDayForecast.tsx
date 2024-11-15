@@ -40,9 +40,8 @@ const FiveDayForecastContainer = styled.div<{
 }>`
   width: 100%;
   height: 100%;
-  background-color: ${({ isActive }) => (isActive ? "transparent" : "#f9f9f9")};
+  background-color: ${({ isActive }) => (isActive ? "transparent" : "White")};
   cursor: pointer;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   caret-color: transparent;
