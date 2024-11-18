@@ -258,26 +258,25 @@ function App() {
   };
 
   useEffect(() => {
+    const getGeolocation = async () => {
+      const geolocationData = await fetchGeolocation(
+        locationData.city,
+        locationData.state || "",
+        locationData.country || "",
+      );
+      if (geolocationData.length > 0) {
+        setLatLon({
+          lat: geolocationData[0].lat,
+          lon: geolocationData[0].lon,
+        });
+
+        await get5daysForecast();
+      } else {
+        console.log("No geolocation data found.");
+      }
+    };
     getGeolocation();
   }, [locationData]);
-
-  const getGeolocation = async () => {
-    const geolocationData = await fetchGeolocation(
-      locationData.city,
-      locationData.state || "",
-      locationData.country || "",
-    );
-    if (geolocationData.length > 0) {
-      setLatLon({
-        lat: geolocationData[0].lat,
-        lon: geolocationData[0].lon,
-      });
-
-      await get5daysForecast();
-    } else {
-      console.log("No geolocation data found.");
-    }
-  };
 
   const get5daysForecast = async () => {
     const daysOfForecast = await fetch5DaysForeCast(latLon.lat, latLon.lon);

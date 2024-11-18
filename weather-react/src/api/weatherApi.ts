@@ -1,3 +1,17 @@
+const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
+
+const handleFetch = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return null;
+  }
+};
+
 export const fetchGeolocation = async (
   cityName: string,
   state?: string, // Make state optional
@@ -20,45 +34,23 @@ export const fetchGeolocation = async (
     query += `,${country}`;
   }
 
-  try {
-    const response = await fetch(`${GEOLOCATIONURL}q=${query}&appid=${APIKEY}`);
-    const data = await response.json();
-    console.log("Geolocation Response:", data);
-    return data; // Ensure this returns the data properly
-  } catch (e) {
-    console.error("Error fetching geolocation data:", e);
-    return []; // Return an empty array on error
-  }
+  return await handleFetch(`${GEOLOCATIONURL}q=${query}&appid=${APIKEY}`);
 };
 
 export const fetchWeather = async (lat: number, lon: number) => {
   const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
   const WEATHERURL = "https://api.openweathermap.org/data/2.5/weather?";
 
-  try {
-    const response = await fetch(
-      `${WEATHERURL}lat=${lat}&lon=${lon}&appid=${APIKEY}`,
-    );
-    const data = await response.json();
-
-    return data; // Returns the weather data
-  } catch (e) {
-    console.error("Error fetching weather data:", e);
-  }
+  return await handleFetch(
+    `${WEATHERURL}lat=${lat}&lon=${lon}&appid=${APIKEY}`,
+  );
 };
 
 export const fetch5DaysForeCast = async (lat: number, lon: number) => {
   const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
   const FORECASTURL = "https://api.openweathermap.org/data/2.5/forecast/daily?";
 
-  try {
-    const response = await fetch(
-      `${FORECASTURL}lat=${lat}&lon=${lon}&cnt=5&appid=${APIKEY}&units=metric`,
-    );
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (e) {
-    console.error("Error fetching 5 day weather forecast data:", e);
-  }
+  return await handleFetch(
+    `${FORECASTURL}lat=${lat}&lon=${lon}&cnt=5&appid=${APIKEY}&units=metric`,
+  );
 };

@@ -1,9 +1,36 @@
-export const fetchNews = async () => {
-  const APIKEY: string = import.meta.env.NEWS_API_KEY;
-  const URL: string = `https://newsapi.org/v2/top-headlines/sources?apiKey=${APIKEY}`;
+const BASE_URL = "https://newsapi.org/v2";
+const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-  const data = await fetch(URL);
-  const response = await data.json();
+const handleFetch = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return null;
+  }
+};
 
-  return response;
+export const fetchTopHeadlines = async (
+  country: string,
+  pageSize: number = 10,
+) => {
+  const url = `${BASE_URL}/top-headlines?country=${country}&pageSize=${pageSize}&apiKey=${API_KEY}`;
+  return await handleFetch(url);
+};
+
+export const fetchCategories = async (
+  category: string,
+  country: string,
+  pageSize: number = 10,
+) => {
+  const url = `${BASE_URL}/top-headlines?category=${category}&country=${country}&pageSize=${pageSize}&apiKey=${API_KEY}`;
+  return await handleFetch(url);
+};
+
+export const searchNews = async (query: string, pageSize: number = 10) => {
+  const url = `${BASE_URL}/everything?q=${encodeURIComponent(query)}&pageSize=${pageSize}&apiKey=${API_KEY}`;
+  return await handleFetch(url);
 };
