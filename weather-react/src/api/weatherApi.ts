@@ -15,9 +15,8 @@ const handleFetch = async (url: string) => {
 export const fetchGeolocation = async (
   cityName: string,
   state?: string, // Make state optional
-  country?: string, // Make country optional
+  country?: string // Make country optional
 ): Promise<{ lat: number; lon: number }[]> => {
-  const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
   const GEOLOCATIONURL = "https://api.openweathermap.org/geo/1.0/direct?";
 
   if (!cityName) {
@@ -38,11 +37,10 @@ export const fetchGeolocation = async (
 };
 
 export const fetchWeather = async (lat: number, lon: number) => {
-  const APIKEY = import.meta.env.VITE_WEATHER_API_KEY;
   const WEATHERURL = "https://api.openweathermap.org/data/2.5/weather?";
 
   return await handleFetch(
-    `${WEATHERURL}lat=${lat}&lon=${lon}&appid=${APIKEY}`,
+    `${WEATHERURL}lat=${lat}&lon=${lon}&appid=${APIKEY}`
   );
 };
 
@@ -51,6 +49,6 @@ export const fetch5DaysForeCast = async (lat: number, lon: number) => {
   const FORECASTURL = "https://api.openweathermap.org/data/2.5/forecast/daily?";
 
   return await handleFetch(
-    `${FORECASTURL}lat=${lat}&lon=${lon}&cnt=5&appid=${APIKEY}&units=metric`,
+    `${FORECASTURL}lat=${lat}&lon=${lon}&cnt=5&appid=${APIKEY}&units=metric`
   );
 };

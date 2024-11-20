@@ -1,8 +1,3 @@
-import { useParams } from "react-router-dom";
-
-const News = () => {
-  const { categoryNews } = useParams();
-  return <h1>this is News {categoryNews}</h1>;
-};
+const News = () => {};
 
 export default News;

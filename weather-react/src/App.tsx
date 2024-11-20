@@ -6,20 +6,6 @@ import { WeatherAppContext } from "./context/weatherAppContext.ts";
 import {
   Search,
   CloudRain,
-  Clear,
-  Clouds,
-  Rain,
-  Drizzle,
-  Thunderstorm,
-  Snow,
-  Mist,
-  Smoke,
-  Haze,
-  Dust,
-  Fog,
-  Sand,
-  Ash,
-  Squall,
   Tornado,
   CloudLightning,
   CloudSnow,
@@ -262,7 +248,7 @@ function App() {
       const geolocationData = await fetchGeolocation(
         locationData.city,
         locationData.state || "",
-        locationData.country || "",
+        locationData.country || ""
       );
       if (geolocationData.length > 0) {
         setLatLon({
@@ -329,7 +315,7 @@ function App() {
                 <div>
                   <h5 style={{ color: "white", opacity: "70%" }}>
                     {new Date(
-                      fiveDaysForecast.list[activeIndex].dt * 1000,
+                      fiveDaysForecast.list[activeIndex].dt * 1000
                     ).toLocaleDateString("en-US", {
                       weekday: "long",
                       month: "long",

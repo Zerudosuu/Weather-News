@@ -23,7 +23,6 @@ const RootMain = styled.div`
 
 const Content = styled.div`
   flex: 1;
-  padding: 20px 15%;
 `;
 
 export default RootLayout;

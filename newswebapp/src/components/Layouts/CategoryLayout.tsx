@@ -1,11 +1,18 @@
-import { Outlet, Link, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+import { Fragment } from "react";
 
 const CategoryLayout = () => {
   return (
-    <div>
-      <h1>Category Layout</h1>
+    <CategoryLayoutContainer>
       <Outlet />
-    </div>
+    </CategoryLayoutContainer>
   );
 };
+
+const CategoryLayoutContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export default CategoryLayout;

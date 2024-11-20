@@ -2,17 +2,30 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const NewsCard = ({ article }) => {
+  const truncateTitle = (title, maxLength) => {
+    if (title.length > maxLength) {
+      return title.slice(0, maxLength) + "...";
+    }
+    return title;
+  };
   return (
-    <Link to={""}>
+    <div>
       <CardContainer>
         {article.urlToImage && (
           <Image src={article.urlToImage} alt="Article image" />
         )}
-        <Title>{article.title}</Title>
-        <Description>{article.description}</Description>
-        <Author>By {article.author}</Author>
+        <Title>{truncateTitle(article.title, 50)}</Title>
+        <Description>
+          {truncateTitle(article.description || "", 100)}
+        </Description>
+        <Author>
+          <a href={article.url} target="_blank" rel="noopener noreferrer">
+            Read More
+          </a>
+          By {article.author}
+        </Author>
       </CardContainer>
-    </Link>
+    </div>
   );
 };
 
@@ -34,7 +47,7 @@ const CardContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: auto;
+  height: 200px;
   border-radius: 8px;
   margin-bottom: 15px;
 `;
@@ -57,6 +70,8 @@ const Author = styled.h4`
   color: #777;
   font-style: italic;
   text-align: right;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export default NewsCard;
