@@ -1,20 +1,10 @@
 import { fetch5DaysForeCast, fetchGeolocation } from "./api/weatherApi";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import FiveDayForecast from "./components/FiveDayForecast.tsx";
 import { WeatherAppContext } from "./context/weatherAppContext.ts";
-import {
-  Search,
-  CloudRain,
-  Tornado,
-  CloudLightning,
-  CloudSnow,
-  CloudFog,
-  Cloud,
-  CloudDrizzle,
-  Sun,
-  Wind,
-} from "lucide-react";
+import { Search } from "lucide-react";
+import WeatherIcon from "./components/weatherIcon.tsx";
 
 function App() {
   const [locationData, setLocationData] = useState<{
@@ -225,23 +215,6 @@ function App() {
       },
     ],
   });
-  const weatherIcons = {
-    Clear: Sun,
-    Clouds: Cloud,
-    Rain: CloudRain,
-    Drizzle: CloudDrizzle,
-    Thunderstorm: CloudLightning,
-    Snow: CloudSnow,
-    Mist: CloudFog,
-    Smoke: CloudFog,
-    Haze: CloudFog,
-    Dust: CloudFog,
-    Fog: CloudFog,
-    Sand: CloudFog,
-    Ash: CloudFog,
-    Squall: Wind,
-    Tornado: Tornado,
-  };
 
   useEffect(() => {
     const getGeolocation = async () => {
@@ -334,17 +307,13 @@ function App() {
                 </div>
 
                 <div className="weatherIcon">
-                  {(() => {
-                    const WeatherIconComponent =
-                      weatherIcons[
-                        fiveDaysForecast.list[activeIndex].weather[0].main
-                      ] || null;
-                    return WeatherIconComponent ? (
-                      <WeatherIconComponent size={350} color="white" />
-                    ) : (
-                      <p>No icon available</p>
-                    );
-                  })()}
+                  <WeatherIcon
+                    condition={
+                      fiveDaysForecast.list[activeIndex].weather[0].main
+                    }
+                    iconSize={600}
+                    iconColor="white"
+                  />
                 </div>
               </div>
 

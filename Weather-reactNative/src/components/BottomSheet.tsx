@@ -8,10 +8,13 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { transform } from "@babel/core";
 
 const { height: SCREENHEIGHT } = Dimensions.get("window");
-const BottomSheet = () => {
+
+type BottomSheetProps = {
+  children?: React.ReactNode;
+};
+const BottomSheet = ({ children }: BottomSheetProps): JSX.Element => {
   const translateY = useSharedValue(0);
   const previousHeight = useSharedValue({ y: 0 });
 
@@ -22,7 +25,7 @@ const BottomSheet = () => {
     .onUpdate((e) => {
       translateY.value = e.translationY + previousHeight.value.y;
       translateY.value = Math.max(translateY.value, -SCREENHEIGHT + 50);
-      translateY.value = Math.min(translateY.value, -SCREENHEIGHT / 4);
+      translateY.value = Math.min(translateY.value, -SCREENHEIGHT / 3.5);
 
       if (translateY.value === -SCREENHEIGHT) {
       }
@@ -35,7 +38,7 @@ const BottomSheet = () => {
   });
 
   useEffect(() => {
-    translateY.value = withSpring(-SCREENHEIGHT / 4, {
+    translateY.value = withSpring(-SCREENHEIGHT / 3.5, {
       duration: 500,
     });
   }, []);
@@ -49,6 +52,7 @@ const BottomSheet = () => {
         />
 
         <View style={styles.line} />
+        {children}
       </Animated.View>
     </GestureDetector>
   );
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
     width: "101%",
     height: 250,
     position: "absolute",
-    top: -220,
+    top: -200,
 
     alignSelf: "center",
   },
