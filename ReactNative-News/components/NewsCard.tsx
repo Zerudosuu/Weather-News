@@ -49,7 +49,7 @@ const NewsCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    width: 200,
+    width: 180,
     marginHorizontal: 10,
     borderRadius: 10,
     overflow: "hidden",

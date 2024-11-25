@@ -15,7 +15,7 @@ type TrendingNewsProps = {
   sectionTitle?: string; // Optional prop to set a custom title
 };
 
-const TrendingNews = ({
+const NewsComponent = ({
   articles,
   sectionTitle = "Trending this week",
 }: TrendingNewsProps) => {
@@ -27,6 +27,7 @@ const TrendingNews = ({
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.scrollContainer}
+        contentContainerStyle={styles.contentContainerStyle}
       >
         {articles.map((news, index) => (
           <NewsCard
@@ -43,17 +44,23 @@ const TrendingNews = ({
 
 const styles = StyleSheet.create({
   trendsContainer: {
-    marginVertical: 20,
-    paddingHorizontal: 10,
+    marginBottom: 20,
+    marginVertical: 10,
   },
   header: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    paddingHorizontal: 20, // Adds some padding around the header text
   },
   scrollContainer: {
     paddingBottom: 10,
   },
+  contentContainerStyle: {
+    paddingLeft: 10, // Adds extra space at the left side of the content
+    paddingRight: 10, // Optionally, adds space at the right to make it scroll more fluidly
+    alignItems: "center", // Ensures the items are centered vertically
+  },
 });
 
-export default TrendingNews;
+export default NewsComponent;

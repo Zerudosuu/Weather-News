@@ -9,12 +9,18 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import NewsCard from "../../components/NewsCard";
-import { fetchTopHeadlines } from "../../components/api/newsApi";
+import {
+  fetchCategories,
+  fetchTopHeadlines,
+} from "../../components/api/newsApi";
 import { StatusBar } from "expo-status-bar";
-import TrendingNews from "../../components/HomeComponents";
+import NewsComponent from "../../components/HomeComponents";
 
 const HomePage = () => {
   const [topHeadlines, setTopHeadlines] = useState<{ articles: any[] }>({
+    articles: [],
+  });
+  const [business, setBusiness] = useState<{ articles: any[] }>({
     articles: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,6 +38,12 @@ const HomePage = () => {
       }
     };
 
+    const getCategories = async () => {
+      const result = await fetchCategories("Business", "US", 10);
+      setBusiness(result); // Set the result with the articles array
+    };
+
+    getCategories(); // Invoke the function inside the useEffect
     getTopHeadlines(); // Invoke the function inside the useEffect
   }, []);
 
@@ -40,19 +52,24 @@ const HomePage = () => {
 
   return (
     <ScrollView style={style.container}>
-      <TrendingNews articles={topHeadlines.articles} />
-      <TrendingNews articles={topHeadlines.articles} />
-      <TrendingNews articles={topHeadlines.articles} />
-      <TrendingNews articles={topHeadlines.articles} />
-      <StatusBar style="light" />
+      <NewsComponent articles={topHeadlines.articles} />
+      <NewsComponent
+        articles={topHeadlines.articles}
+        sectionTitle="Latest News"
+      />
+      <NewsComponent articles={business.articles} sectionTitle="Business" />
+      <NewsComponent
+        articles={topHeadlines.articles}
+        sectionTitle=" Editors Pick"
+      />
+      <StatusBar style="auto" />
     </ScrollView>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    marginTop: 50,
-    padding: 20,
+    marginTop: 70,
     flex: 1,
   },
   Trends: {
