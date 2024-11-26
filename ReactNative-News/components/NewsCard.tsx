@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React from "react";
 import {
   View,
@@ -7,43 +8,55 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
+  Pressable,
 } from "react-native";
+import FastImage from "react-native-fast-image";
 
 type NewscardProps = {
   newsTitle: string;
   newsAuthor: string;
   newsImage: string;
+  isBreaking?: boolean;
+  routerPath?: string;
 };
 
 const NewsCard = ({
-  newsTitle,
-  newsAuthor,
+  newsTitle = "No title available",
+  newsAuthor = "Unknown",
   newsImage,
+  isBreaking = false,
+  routerPath = "/newsFolder/[id]",
 }: NewscardProps): JSX.Element => {
   return (
-    <View style={styles.card}>
-      {/* Image with Overlay */}
+    <Pressable
+      onPress={() =>
+        router.push({
+          pathname: routerPath,
+          params: { id: newsTitle },
+        })
+      }
+      style={styles.card}
+    >
       <ImageBackground
         source={{
-          uri: newsImage || "https://via.placeholder.com/300", // Fallback if image is missing
+          uri: newsImage || "https://via.placeholder.com/300",
         }}
         style={styles.image}
         imageStyle={styles.imageStyle}
       >
-        {/* Example Overlay */}
-        <View style={styles.overlay}>
-          <Text style={styles.overlayText}>Breaking</Text>
-        </View>
+        {isBreaking && (
+          <View style={styles.overlay}>
+            <Text style={styles.overlayText}>Breaking</Text>
+          </View>
+        )}
       </ImageBackground>
-
-      {/* Title and Author */}
       <View style={styles.textContainer}>
         <Text style={styles.title} numberOfLines={2}>
           {newsTitle}
         </Text>
         <Text style={styles.author}>{newsAuthor}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -51,6 +64,8 @@ const styles = StyleSheet.create({
   card: {
     width: 180,
     marginHorizontal: 10,
+    marginBottom: 10,
+
     borderRadius: 10,
     overflow: "hidden",
     backgroundColor: "#fff",
@@ -64,12 +79,12 @@ const styles = StyleSheet.create({
   image: {
     height: 120,
     width: "100%",
-  } as ImageStyle,
+  },
 
   imageStyle: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-  } as ImageStyle,
+  },
 
   overlay: {
     position: "absolute",

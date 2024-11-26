@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
+import { router } from "expo-router";
 
 type CategoryProps = {
   CategoryName: string;
@@ -7,9 +8,17 @@ type CategoryProps = {
 
 const HorizontalNewsCard = ({ CategoryName }: CategoryProps) => {
   return (
-    <View style={style.card}>
+    <Pressable
+      onPress={() =>
+        router.push({
+          pathname: "categoryFolder/[id]",
+          params: { id: CategoryName },
+        })
+      }
+      style={style.card}
+    >
       <Text>{CategoryName}</Text>
-    </View>
+    </Pressable>
   );
 };
 

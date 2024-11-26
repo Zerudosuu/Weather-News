@@ -1,36 +1,31 @@
+import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
-  Pressable,
-  StyleSheet,
-  ScrollView,
   ActivityIndicator,
+  StyleSheet,
+  Text,
+  ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Link, router } from "expo-router";
-import NewsCard from "../../components/NewsCard";
+import NewsComponent from "../../components/HomeComponents";
 import {
   fetchCategories,
   fetchTopHeadlines,
 } from "../../components/api/newsApi";
-import { StatusBar } from "expo-status-bar";
-import NewsComponent from "../../components/HomeComponents";
 
 const HomePage = () => {
-  const [topHeadlines, setTopHeadlines] = useState<{ articles: any[] }>({
-    articles: [],
-  });
-  const [business, setBusiness] = useState<{ articles: any[] }>({
-    articles: [],
-  });
-  const [loading, setLoading] = useState<boolean>(true);
+  const [headlines, setHeadlines] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getTopHeadlines = async () => {
       try {
-        const result = await fetchTopHeadlines("US", 10);
-        setTopHeadlines(result); // Set the result with the articles array
+        const result = await fetchTopHeadlines("US", 20);
+        const filteredHeadlines = result.articles.filter(
+          (article: { title: string }) => !article.title.startsWith("[Removed]")
+        );
+        setHeadlines(filteredHeadlines);
       } catch (err) {
         setError("Failed to fetch top headlines.");
       } finally {
@@ -38,52 +33,57 @@ const HomePage = () => {
       }
     };
 
-    const getCategories = async () => {
-      const result = await fetchCategories("Business", "US", 10);
-      setBusiness(result); // Set the result with the articles array
-    };
-
-    getCategories(); // Invoke the function inside the useEffect
-    getTopHeadlines(); // Invoke the function inside the useEffect
+    getTopHeadlines();
+    getCategory();
   }, []);
 
-  if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
-  if (error) return <Text>{error}</Text>;
+  const getCategory = async () => {
+    const result = await fetchCategories("Business", "US", 10);
+    const filteredHeadlines = result.articles.filter(
+      (article: { title: string }) => !article.title.startsWith("[Removed]")
+    );
+    setCategory(filteredHeadlines);
+  };
+
+  if (loading)
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+
+  if (error)
+    return (
+      <View style={styles.center}>
+        <Text>{error}</Text>
+      </View>
+    );
+
+  const topHeadlines = headlines.slice(0, 10);
+  const otherNews = headlines.slice(10);
 
   return (
-    <ScrollView style={style.container}>
-      <NewsComponent articles={topHeadlines.articles} />
+    <ScrollView style={styles.container}>
       <NewsComponent
-        articles={topHeadlines.articles}
-        sectionTitle="Latest News"
+        articles={topHeadlines}
+        sectionTitle="Top Headlines"
+        isBreaking={true}
       />
-      <NewsComponent articles={business.articles} sectionTitle="Business" />
-      <NewsComponent
-        articles={topHeadlines.articles}
-        sectionTitle=" Editors Pick"
-      />
-      <StatusBar style="auto" />
+      <NewsComponent articles={otherNews} sectionTitle="Latest News" />
+      <NewsComponent articles={category} sectionTitle="Business News" />
     </ScrollView>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 70,
+  },
+  center: {
     flex: 1,
-  },
-  Trends: {
-    marginTop: 20,
-    flex: 1,
-  },
-
-  ScrollTrendsContainer: {
-    marginTop: 20,
-  },
-
-  header: {
-    fontSize: 28,
-    fontWeight: "bold",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
