@@ -1,28 +1,23 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
+import { useNewsContext } from "../../../components/context/newsContext";
 
 const NewsDetailsPage = () => {
   const { id, newsId } = useLocalSearchParams(); // Get category ID and news ID
-  const [newsDetails, setNewsDetails] = useState<any>(null);
+  const [newsDetails, setNewsDetail] = useState<any>(null);
+
+  const { categoryArticles } = useNewsContext();
 
   useEffect(() => {
-    const fetchNewsDetails = async () => {
-      try {
-        // Replace with your API logic to fetch the details of a single news item
-        // For now, we're just setting placeholder data
-        const newsData = {
-          title: newsId,
-          content: `This is a detailed description of the news titled "${newsId}" in category "${id}".`,
-        };
-        setNewsDetails(newsData);
-      } catch (error) {
-        console.error("Error fetching news details:", error);
-      }
-    };
+    const article = categoryArticles.find((article) => article.title === id);
 
-    fetchNewsDetails();
-  }, [newsId]);
+    if (article) {
+      setNewsDetail(article);
+    } else {
+      console.error(`No news found with ID ${id}`);
+    }
+  }, []);
 
   if (!newsDetails) {
     return (
@@ -34,26 +29,46 @@ const NewsDetailsPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{newsDetails.title}</Text>
+      <Image source={{ uri: newsDetails.urlToImage }} style={styles.image} />
+      <Text style={styles.title}>{newsDetails.title}</Text>
+      <Text style={styles.author}>By {newsDetails.author}</Text>
       <Text style={styles.content}>{newsDetails.content}</Text>
+      <Text>News ID: {id}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 50,
-    padding: 10,
+    marginTop: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
   },
-  header: {
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  author: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 10,
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
+    color: "#333",
+  },
+  errorText: {
+    fontSize: 18,
+    color: "red",
+    textAlign: "center",
   },
 });
 

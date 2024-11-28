@@ -1,12 +1,80 @@
-import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import { useLocalSearchParams } from "expo-router"; // Access query parameters
+import NewsComponent from "../components/HomeComponents";
+import { searchNews } from "../components/api/newsApi";
+import { useNewsContext } from "../components/context/newsContext";
 
-const searchPageResult = () => {
+const SearchPage = () => {
+  const { query } = useLocalSearchParams(); // Get the search query
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const { articles } = useNewsContext();
+
+  useEffect(() => {
+    console.log("Loading articles ... ", articles);
+    const fetchSearchResults = async () => {
+      if (query) {
+        try {
+          const results = await searchNews(query as string, 20);
+          const filteredResults = results.articles.filter(
+            (article: { title: string }) =>
+              !article.title.startsWith("[Removed]")
+          );
+          setSearchResults(filteredResults);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchSearchResults();
+  }, [query]);
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
-    <View>
-      <Text>searchPageResult</Text>
+    <View style={styles.container}>
+      <NewsComponent
+        articles={searchResults}
+        sectionTitle=""
+        routerPath="/newsFolder/[id]"
+        horizontal={false}
+      />
     </View>
   );
 };
 
-export default searchPageResult;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 50,
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});
+
+export default SearchPage;

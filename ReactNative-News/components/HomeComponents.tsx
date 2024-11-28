@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import NewsCard from "./NewsCard";
+import { useNewsContext } from "./context/newsContext";
 
 type TrendingNewsProps = {
-  articles: any[]; // Define the type of articles for better type safety
+  articles: any[];
   sectionTitle?: string;
   isBreaking?: boolean;
-  horizontal?: boolean; // New prop to toggle horizontal or vertical layout
+  horizontal?: boolean;
   routerPath?: string;
 };
 
@@ -15,8 +16,10 @@ const NewsComponent = ({
   sectionTitle = "Trending this week",
   isBreaking = false,
   horizontal = true,
-  routerPath = "", // Default to horizontal scrollings
+  routerPath = "",
 }: TrendingNewsProps) => {
+  const { getCurrentIndex } = useNewsContext();
+
   return (
     <View style={styles.container}>
       {sectionTitle != null && (
@@ -25,20 +28,20 @@ const NewsComponent = ({
       <FlatList
         data={articles}
         keyExtractor={(item, index) => `${item.title}-${index}`}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <NewsCard
             newsTitle={item.title}
             newsAuthor={item.source?.name || "Unknown"}
             newsImage={item.urlToImage}
             isBreaking={isBreaking}
-            routerPath={routerPath} // Pass router path to NewsCard for navigation
+            routerPath={routerPath}
           />
         )}
-        horizontal={horizontal} // Set horizontal or vertical scrolling
-        numColumns={horizontal ? 1 : 2} // If not horizontal, show 2 columns
+        horizontal={horizontal}
+        numColumns={horizontal ? 1 : 2}
         contentContainerStyle={[
           styles.contentContainer,
-          !horizontal && styles.verticalContent, // Add vertical-specific styles
+          !horizontal && styles.verticalContent,
         ]}
         showsHorizontalScrollIndicator={!horizontal}
         showsVerticalScrollIndicator={!horizontal}

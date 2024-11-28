@@ -21,7 +21,8 @@ const SearchPage = () => {
 
           // Filter out unwanted articles
           const filteredResult = results.articles.filter(
-            (article) => !article.title.startsWith("[Removed]"),
+            (article: { title: string }) =>
+              !article.title.startsWith("[Removed]")
           );
 
           // Update state with filtered articles

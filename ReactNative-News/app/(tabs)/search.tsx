@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import HorizontalNewsCard from "../../components/horizontalNewsCard";
 import NewsComponent from "../../components/HomeComponents";
+import { useRouter } from "expo-router";
+import { useNewsContext } from "../../components/context/newsContext";
 
 const API_KEY = process.env.EXPO_PUBLIC_NEWS_API_KEY;
 
 const Search = () => {
   const [anyNews, setAnyNews] = useState<any[]>([]);
+  const [loadingAll, setLoadingAll] = useState(true); // State for entire component loading
+  const [loadingNews, setLoadingNews] = useState(true); // State for "Other News"
   const categories = [
     "Business",
     "Entertainment",
@@ -18,6 +29,9 @@ const Search = () => {
     "Technology",
   ];
 
+  const { articles } = useNewsContext();
+  const router = useRouter();
+
   useEffect(() => {
     const getNews = async () => {
       try {
@@ -26,15 +40,20 @@ const Search = () => {
         );
 
         const data = await result.json();
+
+        // Format the news data
         const formattedNews = data.sources.map((source: any) => ({
           title: source.name,
           source: { name: source.name },
           urlToImage: source.urlToImage || "https://via.placeholder.com/300",
         }));
+
         setAnyNews(formattedNews.slice(0, 20));
       } catch (error) {
         console.error("Fetch error:", error);
-        return;
+      } finally {
+        setLoadingNews(false); // Stop loading for "Other News"
+        setLoadingAll(false); // Stop loading for the entire component
       }
     };
 
@@ -42,8 +61,21 @@ const Search = () => {
   }, []);
 
   const handleSubmit = (searchText: string) => {
-    console.log("Search submitted:", searchText);
+    router.push({
+      pathname: "/searchPage",
+      params: { query: searchText },
+    });
   };
+
+  if (loadingAll) {
+    // Show loading indicator for the entire screen
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -59,7 +91,7 @@ const Search = () => {
         />
       </View>
 
-      {/* Replace ScrollView with FlatList */}
+      {/* Render Categories and Other News */}
       <FlatList
         data={[{ key: "categories" }, { key: "news" }]} // Dummy keys to render sections
         keyExtractor={(item) => item.key}
@@ -78,11 +110,22 @@ const Search = () => {
           } else if (item.key === "news") {
             return (
               <View style={styles.newsContainer}>
-                <NewsComponent
-                  articles={anyNews}
-                  sectionTitle="Other News"
-                  horizontal={false}
-                />
+                <Text style={styles.sectionTitle}>Other News</Text>
+
+                {loadingNews ? (
+                  // Loading indicator for "Other News" section
+                  <View style={styles.center}>
+                    <ActivityIndicator size="small" color="#007aff" />
+                    <Text>Loading Other News...</Text>
+                  </View>
+                ) : (
+                  <NewsComponent
+                    articles={anyNews}
+                    sectionTitle=""
+                    horizontal={false}
+                    routerPath="/newsFolder/[id]"
+                  />
+                )}
               </View>
             );
           }
@@ -125,6 +168,11 @@ const styles = StyleSheet.create({
   },
   newsContainer: {
     marginVertical: 20,
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

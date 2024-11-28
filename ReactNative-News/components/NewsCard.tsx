@@ -5,19 +5,15 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  ViewStyle,
-  TextStyle,
-  ImageStyle,
   Pressable,
 } from "react-native";
-import FastImage from "react-native-fast-image";
 
-type NewscardProps = {
+type NewsCardProps = {
   newsTitle: string;
   newsAuthor: string;
   newsImage: string;
   isBreaking?: boolean;
-  routerPath?: string;
+  routerPath: string;
 };
 
 const NewsCard = ({
@@ -26,15 +22,15 @@ const NewsCard = ({
   newsImage,
   isBreaking = false,
   routerPath = "/newsFolder/[id]",
-}: NewscardProps): JSX.Element => {
+}: NewsCardProps): JSX.Element => {
   return (
     <Pressable
-      onPress={() =>
-        router.push({
-          pathname: routerPath,
-          params: { id: newsTitle },
-        })
-      }
+      onPress={() => {
+        const route = routerPath
+          ? routerPath.replace("[id]", encodeURIComponent(newsTitle))
+          : `/newsFolder/${encodeURIComponent(newsTitle)}`;
+        router.push(route);
+      }}
       style={styles.card}
     >
       <ImageBackground
@@ -65,7 +61,6 @@ const styles = StyleSheet.create({
     width: 180,
     marginHorizontal: 10,
     marginBottom: 10,
-
     borderRadius: 10,
     overflow: "hidden",
     backgroundColor: "#fff",
@@ -75,48 +70,41 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
-
   image: {
     height: 120,
     width: "100%",
   },
-
   imageStyle: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-
   overlay: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     paddingVertical: 5,
     paddingHorizontal: 10,
-  } as ViewStyle,
-
+  },
   overlayText: {
     color: "#fff",
     fontSize: 12,
     fontWeight: "bold",
-  } as TextStyle,
-
+  },
   textContainer: {
     padding: 10,
-  } as ViewStyle,
-
+  },
   title: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#333",
     marginBottom: 5,
-  } as TextStyle,
-
+  },
   author: {
     fontSize: 14,
     color: "#666",
-  } as TextStyle,
+  },
 });
 
 export default NewsCard;
