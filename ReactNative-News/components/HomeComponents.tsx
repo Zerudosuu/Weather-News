@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import NewsCard from "./NewsCard";
 import { useNewsContext } from "./context/newsContext";
@@ -9,6 +9,7 @@ type TrendingNewsProps = {
   isBreaking?: boolean;
   horizontal?: boolean;
   routerPath?: string;
+  sectionTitleSize?: number;
 };
 
 const NewsComponent = ({
@@ -17,13 +18,14 @@ const NewsComponent = ({
   isBreaking = false,
   horizontal = true,
   routerPath = "",
+  sectionTitleSize = 20,
 }: TrendingNewsProps) => {
-  const { getCurrentIndex } = useNewsContext();
-
   return (
     <View style={styles.container}>
       {sectionTitle != null && (
-        <Text style={styles.header}>{sectionTitle}</Text>
+        <Text style={[styles.header, { fontSize: sectionTitleSize }]}>
+          {sectionTitle}
+        </Text>
       )}
       <FlatList
         data={articles}

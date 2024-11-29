@@ -13,13 +13,11 @@ import { useNewsContext } from "../components/context/newsContext";
 
 const SearchPage = () => {
   const { query } = useLocalSearchParams(); // Get the search query
-  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { articles } = useNewsContext();
+  const { searchResults, setSearchResults } = useNewsContext();
 
   useEffect(() => {
-    console.log("Loading articles ... ", articles);
     const fetchSearchResults = async () => {
       if (query) {
         try {

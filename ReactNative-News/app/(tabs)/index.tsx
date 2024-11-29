@@ -11,27 +11,30 @@ import {
   fetchCategories,
   fetchTopHeadlines,
 } from "../../components/api/newsApi";
-import {
-  NewsProvider,
-  useNewsContext,
-} from "../../components/context/newsContext";
+import { useNewsContext } from "../../components/context/newsContext";
+import BlobBackground from "../../components/BlobComponent";
 
 const HomePage = () => {
-  const [headlines, setHeadlines] = useState([]);
-  const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { articles, setArticles } = useNewsContext();
+  const {
+    articles,
+    setArticles,
+    categoryArticles,
+    setCategoryArticles,
+    setOtherNews,
+  } = useNewsContext();
 
   useEffect(() => {
     const getTopHeadlines = async () => {
       try {
-        const result = await fetchTopHeadlines("US", 20);
+        const result = await fetchTopHeadlines("US", 30);
         const filteredHeadlines = result.articles.filter(
           (article: { title: string }) => !article.title.startsWith("[Removed]")
         );
         setArticles(filteredHeadlines);
+        setOtherNews(filteredHeadlines.slice(15, 30));
       } catch (err) {
         setError("Failed to fetch top headlines.");
       } finally {
@@ -48,7 +51,7 @@ const HomePage = () => {
     const filteredHeadlines = result.articles.filter(
       (article: { title: string }) => !article.title.startsWith("[Removed]")
     );
-    setCategory(filteredHeadlines);
+    setCategoryArticles(filteredHeadlines);
   };
 
   if (loading) {
@@ -68,33 +71,42 @@ const HomePage = () => {
   }
 
   const topHeadlines = articles.slice(0, 10);
-  const otherNews = articles.slice(10);
+  const otherNews = articles.slice(10, 15);
 
   return (
-    <ScrollView style={styles.container}>
-      <NewsComponent
-        articles={topHeadlines}
-        sectionTitle="Top Headlines"
-        isBreaking={true}
-        routerPath="/newsFolder/[id]"
-      />
-      <NewsComponent
-        articles={otherNews}
-        sectionTitle="Latest News"
-        routerPath="/newsFolder/[id]"
-      />
-      <NewsComponent
-        articles={category}
-        sectionTitle="Business News"
-        routerPath="/newsFolder/[id]"
-      />
-    </ScrollView>
+    <View style={styles.container}>
+      <BlobBackground top={-100} left={200} />
+      <BlobBackground left={-100} bottom={300} />
+
+      <ScrollView style={styles.scrollView}>
+        <NewsComponent
+          articles={topHeadlines}
+          sectionTitle="Top Headlines"
+          isBreaking={true}
+          routerPath="/newsFolder/[id]"
+          sectionTitleSize={40}
+        />
+        <NewsComponent
+          articles={otherNews}
+          sectionTitle="Latest News"
+          routerPath="/newsFolder/[id]"
+        />
+        <NewsComponent
+          articles={categoryArticles}
+          sectionTitle="Business News"
+          routerPath="/newsFolder/[id]"
+        />
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
+  },
+  scrollView: {
     marginTop: 70,
   },
   center: {

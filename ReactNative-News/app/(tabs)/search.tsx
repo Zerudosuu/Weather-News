@@ -8,18 +8,17 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 import HorizontalNewsCard from "../../components/horizontalNewsCard";
 import NewsComponent from "../../components/HomeComponents";
 import { useRouter } from "expo-router";
 import { useNewsContext } from "../../components/context/newsContext";
-
-const API_KEY = process.env.EXPO_PUBLIC_NEWS_API_KEY;
+import BlobBackground from "../../components/BlobComponent";
 
 const Search = () => {
-  const [anyNews, setAnyNews] = useState<any[]>([]);
-  const [loadingAll, setLoadingAll] = useState(true); // State for entire component loading
-  const [loadingNews, setLoadingNews] = useState(true); // State for "Other News"
+  const [loadingAll, setLoadingAll] = useState(true);
+  const { otherNews } = useNewsContext();
+  const router = useRouter();
+
   const categories = [
     "Business",
     "Entertainment",
@@ -29,36 +28,14 @@ const Search = () => {
     "Technology",
   ];
 
-  const { articles } = useNewsContext();
-  const router = useRouter();
+  // Color palette for categories
+  const colors = ["16a0e0", "00d3d1", "00bbe4", "3fe6ae", "a4f389", "f9f871"];
 
   useEffect(() => {
-    const getNews = async () => {
-      try {
-        const result = await fetch(
-          `https://newsapi.org/v2/sources?apiKey=${API_KEY}`
-        );
-
-        const data = await result.json();
-
-        // Format the news data
-        const formattedNews = data.sources.map((source: any) => ({
-          title: source.name,
-          source: { name: source.name },
-          urlToImage: source.urlToImage || "https://via.placeholder.com/300",
-        }));
-
-        setAnyNews(formattedNews.slice(0, 20));
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoadingNews(false); // Stop loading for "Other News"
-        setLoadingAll(false); // Stop loading for the entire component
-      }
-    };
-
-    getNews();
-  }, []);
+    if (otherNews && otherNews.length > 0) {
+      setLoadingAll(false); // Set loading to false only when otherNews is available
+    }
+  }, [otherNews]);
 
   const handleSubmit = (searchText: string) => {
     router.push({
@@ -68,7 +45,6 @@ const Search = () => {
   };
 
   if (loadingAll) {
-    // Show loading indicator for the entire screen
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -79,6 +55,8 @@ const Search = () => {
 
   return (
     <View style={styles.container}>
+      <BlobBackground top={-450} left={-50} />
+      <BlobBackground left={100} bottom={300} />
       <StatusBar style="auto" />
 
       {/* Search Bar */}
@@ -102,7 +80,11 @@ const Search = () => {
                 <Text style={styles.sectionTitle}>Categories</Text>
                 <View style={styles.categoryContainer}>
                   {categories.map((category, index) => (
-                    <HorizontalNewsCard CategoryName={category} key={index} />
+                    <HorizontalNewsCard
+                      CategoryName={category}
+                      key={index}
+                      color={colors[index % colors.length]}
+                    />
                   ))}
                 </View>
               </View>
@@ -111,20 +93,15 @@ const Search = () => {
             return (
               <View style={styles.newsContainer}>
                 <Text style={styles.sectionTitle}>Other News</Text>
-
-                {loadingNews ? (
-                  // Loading indicator for "Other News" section
-                  <View style={styles.center}>
-                    <ActivityIndicator size="small" color="#007aff" />
-                    <Text>Loading Other News...</Text>
-                  </View>
-                ) : (
+                {otherNews && otherNews.length > 0 ? (
                   <NewsComponent
-                    articles={anyNews}
+                    articles={otherNews}
                     sectionTitle=""
                     horizontal={false}
                     routerPath="/newsFolder/[id]"
                   />
+                ) : (
+                  <Text>No news available.</Text>
                 )}
               </View>
             );
@@ -140,6 +117,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 60,
     flex: 1,
+    position: "relative",
   },
   searchContainer: {
     width: "100%",

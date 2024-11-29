@@ -4,6 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { fetchCategories } from "../../../components/api/newsApi";
 import NewsComponent from "../../../components/HomeComponents";
 import { useNewsContext } from "../../../components/context/newsContext";
+import BlobBackground from "../../../components/BlobComponent";
 
 const CategoryPage = () => {
   const { id } = useLocalSearchParams(); // Get the category id from route parameters
@@ -68,9 +69,11 @@ const CategoryPage = () => {
 
   return (
     <View style={styles.container}>
+      <BlobBackground top={-100} left={200} />
+      <BlobBackground left={-50} bottom={200} />
       <NewsComponent
         articles={categoryArticles}
-        sectionTitle={`${id} News`} // Display the category as the section title
+        sectionTitle={""} // Display the category as the section title
         horizontal={false}
         routerPath="categoryFolder/[id]/[newsId]"
       />
@@ -83,6 +86,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     paddingVertical: 10,
     flex: 1,
+    position: "relative",
   },
   center: {
     flex: 1,

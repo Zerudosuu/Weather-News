@@ -20,6 +20,7 @@ const RootLayout = () => {
               fontWeight: "bold",
               color: "#333",
             },
+            headerShown: false,
           })}
         />
         {/* News Details Screen */}
@@ -49,6 +50,7 @@ const RootLayout = () => {
               fontWeight: "bold",
               color: "#333",
             },
+            headerShown: false,
           })}
         />
         <Stack.Screen

@@ -16,6 +16,12 @@ type NewsContextType = {
 
   categoryArticles: Article[];
   setCategoryArticles: (articles: Article[]) => void;
+
+  otherNews: Article[];
+  setOtherNews: (otherNews: []) => void;
+
+  searchResults: Article[];
+  setSearchResults: (searchResults: Article[]) => void;
 };
 
 // Create the context with default values
@@ -24,6 +30,10 @@ const NewsContext = createContext<NewsContextType>({
   setArticles: () => {},
   categoryArticles: [],
   setCategoryArticles: () => {},
+  otherNews: [],
+  setOtherNews: () => {},
+  searchResults: [],
+  setSearchResults: () => {},
 });
 
 // Custom hook to use the NewsContext
@@ -32,8 +42,9 @@ export const useNewsContext = () => useContext(NewsContext);
 // Provider component to wrap around the app
 export const NewsProvider = ({ children }: { children: ReactNode }) => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [currentCategory, setCurrentCategory] = useState("");
+  const [otherNews, setOtherNews] = useState<Article[]>([]);
   const [categoryArticles, setCategoryArticles] = useState<Article[]>([]);
+  const [searchResults, setSearchResults] = useState<Article[]>([]);
 
   // Function to set the current index
 
@@ -44,6 +55,10 @@ export const NewsProvider = ({ children }: { children: ReactNode }) => {
         setArticles,
         categoryArticles,
         setCategoryArticles,
+        otherNews,
+        setOtherNews,
+        searchResults,
+        setSearchResults,
       }}
     >
       {children}

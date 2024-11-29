@@ -1,10 +1,18 @@
-import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useNewsContext } from "../../../components/context/newsContext";
+import BlobBackground from "../../../components/BlobComponent"; // Optional background component
+import { StatusBar } from "expo-status-bar";
 
 const NewsDetailsPage = () => {
-  const { id, newsId } = useLocalSearchParams(); // Get category ID and news ID
+  const { id } = useLocalSearchParams(); // Get the news ID from the route parameters
   const [newsDetails, setNewsDetail] = useState<any>(null);
 
   const { categoryArticles } = useNewsContext();
@@ -21,44 +29,70 @@ const NewsDetailsPage = () => {
 
   if (!newsDetails) {
     return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
+      <View style={styles.center}>
+        <Text style={styles.errorText}>Loading...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: newsDetails.urlToImage }} style={styles.image} />
-      <Text style={styles.title}>{newsDetails.title}</Text>
-      <Text style={styles.author}>By {newsDetails.author}</Text>
-      <Text style={styles.content}>{newsDetails.content}</Text>
-      <Text>News ID: {id}</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <StatusBar style="light" />
+      <ImageBackground
+        source={{ uri: newsDetails.urlToImage }}
+        style={styles.imageBackground}
+        imageStyle={styles.image}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.title}>{newsDetails.title}</Text>
+          <Text style={styles.author}>
+            By {newsDetails.author || "Unknown"}
+          </Text>
+        </View>
+      </ImageBackground>
+
+      <View style={styles.contentContainer}>
+        <Text style={styles.content}>
+          {newsDetails.content || "Content not available."}
+        </Text>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageBackground: {
+    width: "100%",
+    height: 300,
+    justifyContent: "flex-end",
   },
   image: {
-    width: "100%",
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 16,
+    resizeMode: "cover",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    color: "#fff",
+    marginBottom: 5,
   },
   author: {
     fontSize: 16,
-    color: "#666",
-    marginBottom: 10,
+    color: "#ddd",
+  },
+  contentContainer: {
+    padding: 20,
   },
   content: {
     fontSize: 16,

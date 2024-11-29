@@ -1,30 +1,59 @@
-import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useNewsContext } from "../../components/context/newsContext";
+import { StatusBar } from "expo-status-bar";
 
 const News = () => {
-  const [article, setArticle] = useState<any>([]);
-  const { articles } = useNewsContext(); // Access articles from the context
-  const { id } = useLocalSearchParams(); // Get the news ID from the route params
+  const [article, setArticle] = useState<any>(null);
+  const { articles, otherNews, categoryArticles, searchResults } =
+    useNewsContext();
+  const { id } = useLocalSearchParams();
 
   useEffect(() => {
-    const article = articles.find((article) => article.title === id);
+    // Combine all articles into a single array and find the article by title
+    const allArticles = [
+      ...articles,
+      ...otherNews,
+      ...categoryArticles,
+      ...searchResults,
+    ];
+    const foundArticle = allArticles.find((article) => article.title === id);
 
-    if (article) {
-      setArticle(article);
+    if (foundArticle) {
+      setArticle(foundArticle);
     } else {
       console.error(`No news found with ID ${id}`);
     }
-  }, []);
+  }, [articles, otherNews, categoryArticles, id]);
+
+  if (!article) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Article not found</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: article.urlToImage }} style={styles.image} />
-      <Text style={styles.title}>{article.title}</Text>
-      <Text style={styles.author}>By {article.author}</Text>
-      <Text style={styles.content}>{article.content}</Text>
-      <Text>News ID: {id}</Text>
+      <StatusBar style="light" />
+      <ImageBackground
+        source={{ uri: article.urlToImage }}
+        style={styles.imageBackground}
+        imageStyle={styles.image}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.title}>{article.title}</Text>
+          <Text style={styles.author}>
+            By {article.author || "Unknown Author"}
+          </Text>
+        </View>
+      </ImageBackground>
+
+      <Text style={styles.content}>
+        {article.content || "Content not available"}
+      </Text>
     </View>
   );
 };
@@ -37,30 +66,36 @@ export const options = {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  imageBackground: {
+    width: "100%",
+    height: 300,
+    justifyContent: "flex-end",
   },
   image: {
-    width: "100%",
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 16,
+    resizeMode: "cover",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    color: "#fff",
+    marginBottom: 5,
   },
   author: {
     fontSize: 16,
-    color: "#666",
-    marginBottom: 10,
+    color: "#ddd",
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
     color: "#333",
+    padding: 20,
   },
   errorText: {
     fontSize: 18,

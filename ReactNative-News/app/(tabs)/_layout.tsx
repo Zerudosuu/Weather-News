@@ -2,81 +2,102 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { NewsProvider } from "../../components/context/newsContext";
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  size?: number; // Optional size with default fallback
-  color: string;
-}) {
-  return (
-    <FontAwesome
-      style={{ marginBottom: -3 }}
-      size={props.size || 24}
-      {...props}
-    />
-  );
-}
+import Ionicons from "@expo/vector-icons/Ionicons";
+import TabBar from "../../components/TabBar";
 
 const TabsLayOut = () => {
   return (
     <Tabs
       screenOptions={{
+        headerShown: true,
+        tabBarShowLabel: false,
         tabBarStyle: {
+          elevation: 0,
+          backgroundColor: "#fff",
+          alignItems: "center",
+          justifyContent: "center",
           height: 60,
-          backgroundColor: "#f8f8f8", // Light background for the tab bar
-          borderTopColor: "#ddd", // Subtle border at the top of the tab bar
-          borderTopWidth: 1,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
         },
-        tabBarLabelStyle: {
-          fontSize: 12, // Slightly smaller text for labels
-          fontWeight: "600",
-          fontFamily: "Arial", // Set a consistent font
-          color: "#333", // Neutral color for text
-        },
-        tabBarActiveTintColor: "#007aff", // Active tab highlight color (blue)
-        tabBarInactiveTintColor: "#8e8e93", // Inactive tab color (gray)
       }}
     >
-      {/* Home Tab */}
       <Tabs.Screen
         name="index"
         options={{
           headerTitle: "Home",
-          tabBarLabel: "Home",
           headerStyle: {
             backgroundColor: "transparent",
           },
           headerTransparent: true,
           headerTitleStyle: {
-            fontSize: 28,
+            fontSize: 32,
             fontFamily: "Arial",
             fontWeight: "bold",
-            color: "#333",
+            color: "black",
           },
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="home" color={color} size={size || 20} />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                paddingTop: 10,
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={24}
+                color={focused ? "#16a0e0" : "#ccc"}
+              />
+              <Text
+                style={{
+                  color: focused ? "#16a0e0" : "#ccc",
+                  fontSize: 12,
+                  marginTop: 4,
+                }}
+              >
+                Home
+              </Text>
+            </View>
           ),
         }}
       />
-
       <Tabs.Screen
         name="search"
         options={{
           headerTitle: "Search",
-          tabBarLabel: "Search",
           headerStyle: {
             backgroundColor: "transparent",
           },
           headerTransparent: true,
+
           headerTitleStyle: {
-            fontSize: 28,
+            fontSize: 32,
             fontFamily: "Arial",
             fontWeight: "bold",
-            color: "#333",
+            color: "black",
           },
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="search" color={color} size={size || 20} />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                paddingTop: 10,
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={focused ? "search" : "search-outline"}
+                size={24}
+                color={focused ? "#16a0e0" : "#ccc"}
+              />
+              <Text
+                style={{
+                  color: focused ? "#16a0e0" : "#ccc",
+                  fontSize: 12,
+                  marginTop: 4,
+                }}
+              >
+                Search
+              </Text>
+            </View>
           ),
         }}
       />

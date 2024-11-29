@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { router } from "expo-router";
+import BlobBackground from "./BlobComponent";
 
 type CategoryProps = {
   CategoryName: string;
+  color?: string;
 };
 
-const HorizontalNewsCard = ({ CategoryName }: CategoryProps) => {
+const HorizontalNewsCard = ({ CategoryName, color }: CategoryProps) => {
   return (
     <Pressable
       onPress={() =>
@@ -17,6 +19,13 @@ const HorizontalNewsCard = ({ CategoryName }: CategoryProps) => {
       }
       style={style.card}
     >
+      <BlobBackground
+        width={100}
+        height={100}
+        top={-10}
+        right={60}
+        fill={color}
+      />
       <Text>{CategoryName}</Text>
     </Pressable>
   );
