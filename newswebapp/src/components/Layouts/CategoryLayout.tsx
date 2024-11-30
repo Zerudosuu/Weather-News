@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import { Fragment } from "react";
 
 const CategoryLayout = () => {
   return (

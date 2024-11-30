@@ -5,6 +5,19 @@ import styled from "styled-components";
 
 import NewsCard from "../newsCard.tsx";
 
+//BreakPoints
+const sizes = {
+  desktop: "1024px",
+  tablet: "1000px",
+  mobile: "480px",
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 const SearchPage = () => {
   const location = useLocation();
   const [searchResults, setSearchResults] = useState([]);
@@ -65,13 +78,17 @@ const SearchPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media ${media.mobile} {
+    padding: 10px 5%;
+  }
 `;
 
 const Header = styled.div`
   text-align: center;
-  border-bottom: 1px solid black;
   padding-bottom: 10px;
   margin-bottom: 20px;
+  margin-top: 20px;
 
   h1 {
     font-size: 1.8rem;

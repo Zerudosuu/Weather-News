@@ -6,6 +6,19 @@ import { WeatherAppContext } from "./context/weatherAppContext.ts";
 import { Search } from "lucide-react";
 import WeatherIcon from "./components/weatherIcon.tsx";
 
+//BreakPoints
+const sizes = {
+  desktop: "1024px",
+  tablet: "1000px",
+  mobile: "480px",
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function App() {
   const [locationData, setLocationData] = useState<{
     city: string;
@@ -216,22 +229,34 @@ function App() {
     ],
   });
 
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
+
   useEffect(() => {
     const getGeolocation = async () => {
-      const geolocationData = await fetchGeolocation(
-        locationData.city,
-        locationData.state || "",
-        locationData.country || ""
-      );
-      if (geolocationData.length > 0) {
-        setLatLon({
-          lat: geolocationData[0].lat,
-          lon: geolocationData[0].lon,
-        });
+      setIsLoading(true); // Set loading to true
+      setErrorMessage(""); // Clear any previous error message
 
-        await get5daysForecast();
-      } else {
-        console.log("No geolocation data found.");
+      try {
+        const geolocationData = await fetchGeolocation(
+          locationData.city,
+          locationData.state || "",
+          locationData.country || ""
+        );
+        if (geolocationData.length > 0) {
+          setLatLon({
+            lat: geolocationData[0].lat,
+            lon: geolocationData[0].lon,
+          });
+
+          await get5daysForecast();
+        } else {
+          console.log("No geolocation data found.");
+        }
+      } catch (e) {
+        setErrorMessage("Error fetching geolocation data.");
+      } finally {
+        setIsLoading(false); // Set loading to false
       }
     };
     getGeolocation();
@@ -266,14 +291,18 @@ function App() {
       <AppContainer>
         <main>
           <aside>
-            <FiveDayForecast fiveDaysForecast={fiveDaysForecast} />
+            {isLoading && <LoadingMessage>Loading...</LoadingMessage>}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {!isLoading && !errorMessage && fiveDaysForecast && (
+              <FiveDayForecast fiveDaysForecast={fiveDaysForecast} />
+            )}
           </aside>
           <section>
             <div className="formLocation">
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  name="locationInput" // Add the name attribute here
+                  name="locationInput"
                   id="location-input"
                   placeholder="e.g., Naga, Cebu, PH"
                 />
@@ -282,50 +311,51 @@ function App() {
                 </button>
               </form>
             </div>
+            {!isLoading && fiveDaysForecast && !errorMessage && (
+              <div className="weatherData">
+                <div className="weatherCelsiusAndLocation">
+                  <div>
+                    <h5 style={{ color: "white", opacity: "70%" }}>
+                      {new Date(
+                        fiveDaysForecast.list[activeIndex].dt * 1000
+                      ).toLocaleDateString("en-US", {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </h5>
+                    <h1>{fiveDaysForecast.list[activeIndex].temp.day} °C</h1>
+                    <h4>
+                      {locationData.city +
+                        ", " +
+                        locationData.country +
+                        " |  Humidity: " +
+                        fiveDaysForecast.list[activeIndex].humidity}
+                      %
+                    </h4>
+                  </div>
 
-            <div className="weatherData">
-              <div className="weatherCelsiusAndLocation">
-                <div>
-                  <h5 style={{ color: "white", opacity: "70%" }}>
-                    {new Date(
-                      fiveDaysForecast.list[activeIndex].dt * 1000
-                    ).toLocaleDateString("en-US", {
-                      weekday: "long",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </h5>
-                  <h1>{fiveDaysForecast.list[activeIndex].temp.day} °C</h1>
-                  <h4>
-                    {locationData.city +
-                      ", " +
-                      locationData.country +
-                      " |  Humidity: " +
-                      fiveDaysForecast.list[activeIndex].humidity}
-                    %
-                  </h4>
+                  <div className="weatherIcon">
+                    <WeatherIcon
+                      condition={
+                        fiveDaysForecast.list[activeIndex].weather[0].main
+                      }
+                      iconSize={350}
+                      iconColor="white"
+                    />
+                  </div>
                 </div>
 
-                <div className="weatherIcon">
-                  <WeatherIcon
-                    condition={
-                      fiveDaysForecast.list[activeIndex].weather[0].main
-                    }
-                    iconSize={600}
-                    iconColor="white"
-                  />
+                <div className="weatherDescriptionAndIcon">
+                  <p>Weather description</p>
+                  <h1>
+                    {fiveDaysForecast.list[
+                      activeIndex
+                    ].weather[0].description.toUpperCase()}
+                  </h1>
                 </div>
               </div>
-
-              <div className="weatherDescriptionAndIcon">
-                <p>Weather description</p>
-                <h1>
-                  {fiveDaysForecast.list[
-                    activeIndex
-                  ].weather[0].description.toUpperCase()}
-                </h1>
-              </div>
-            </div>
+            )}
           </section>
         </main>
       </AppContainer>
@@ -336,7 +366,7 @@ function App() {
 const AppContainer = styled.div`
   width: 100svw;
   height: 100svh;
-  display: grid;
+  display: flex;
   backdrop-filter: blur(6px) saturate(33%);
   -webkit-backdrop-filter: blur(6px) saturate(33%);
   background-color: rgba(17, 25, 40, 0.73);
@@ -344,26 +374,54 @@ const AppContainer = styled.div`
   background-image: url("../src/assets/Nature-wallpapers-Full-HD-backgroud.jpg");
 
   main {
-    display: grid;
-    grid-template-columns: 0.2fr 1fr;
+    display: flex;
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(6px) saturate(33%);
     -webkit-backdrop-filter: blur(6px) saturate(33%);
     background-color: rgba(17, 25, 40, 0.73);
+
+    @media ${media.mobile} {
+      flex-direction: column-reverse;
+      height: 100vh;
+    }
 
     aside {
       display: flex;
       flex-direction: column;
       align-items: center;
       background-color: transparent;
+      width: 10%;
+      height: 100%;
+
+      @media ${media.tablet} {
+        width: 30%;
+        justify-content: center;
+      }
+
+      @media ${media.mobile} {
+        flex-direction: row;
+        width: 100%;
+        height: 20%;
+      }
     }
 
     section {
       border: none;
       width: 100%;
       height: 100%;
-      display: grid;
-      grid-auto-rows: 100px 1fr;
+      display: flex;
+      flex-direction: column;
       padding: 0 30px;
+
+      @media ${media.tablet} {
+        padding: 0;
+      }
+
+      @media ${media.mobile} {
+        padding: 0;
+      }
+
       .formLocation {
         display: flex;
         justify-content: end;
@@ -371,11 +429,32 @@ const AppContainer = styled.div`
         color: #f9f9f9;
         padding: 20px;
 
+        @media ${media.tablet} {
+          width: 100%;
+          justify-content: center;
+        }
+
+        @media ${media.mobile} {
+          width: 100%;
+          padding: 0;
+          justify-content: center;
+          padding-top: 20px;
+        }
+
         form {
           position: relative;
           width: 20%;
           display: flex;
           align-items: center;
+
+          @media ${media.tablet} {
+            width: 100%;
+          }
+
+          @media ${media.mobile} {
+            align-items: center;
+            width: 80%;
+          }
 
           input {
             width: 100%;
@@ -405,15 +484,33 @@ const AppContainer = styled.div`
         display: flex;
         flex-direction: column;
         padding: 20px;
+        height: 100%;
+
+        @media ${media.mobile} {
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+        }
 
         .weatherCelsiusAndLocation {
           padding: 20px;
           display: flex;
+          width: 100%;
           justify-content: space-between;
 
           .weatherIcon {
             position: absolute;
             right: 10%;
+
+            @media ${media.tablet} {
+              position: relative;
+              right: 0;
+            }
+
+            @media ${media.mobile} {
+              position: relative;
+              right: 0;
+            }
           }
 
           h1 {
@@ -425,6 +522,40 @@ const AppContainer = styled.div`
             color: #f9f9f9;
             opacity: 80%;
             font-weight: 300;
+          }
+
+          @media ${media.tablet} {
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            h1 {
+              font-size: 32px;
+            }
+
+            h4 {
+              font-size: 20px;
+              display: none;
+            }
+          }
+
+          @media ${media.mobile} {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+
+            h1 {
+              font-size: 32px;
+            }
+
+            h4 {
+              font-size: 20px;
+              display: none;
+            }
           }
         }
 
@@ -445,10 +576,52 @@ const AppContainer = styled.div`
             color: #f9f9f9;
             opacity: 70%;
           }
+
+          @media ${media.tablet} {
+            height: 20%;
+            flex-direction: column;
+
+            h1 {
+              font-size: 42px;
+            }
+
+            h4 {
+              font-size: 20px;
+              display: none;
+            }
+          }
+
+          @media ${media.mobile} {
+            height: 20%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            h1 {
+              font-size: 32px;
+            }
+
+            h4 {
+              font-size: 20px;
+              display: none;
+            }
+          }
         }
       }
     }
   }
+`;
+
+const LoadingMessage = styled.div`
+  color: white;
+  font-size: 18px;
+  margin-top: 20px;
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 18px;
+  margin-top: 20px;
 `;
 
 export default App;

@@ -2,6 +2,19 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { WeatherAppContext } from "../context/weatherAppContext.ts";
 
+//BreakPoints
+const sizes = {
+  desktop: "1024px",
+  tablet: "768px",
+  mobile: "480px",
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 const FiveDayForecast = ({ fiveDaysForecast }: { fiveDaysForecast: any }) => {
   const weatherContext = useContext(WeatherAppContext);
   const { activeIndex, setActiveIndex } = weatherContext;
@@ -59,6 +72,32 @@ const FiveDayForecastContainer = styled.div<{
   h3,
   h5 {
     color: ${({ isActive }) => (isActive ? "#f9f9f9" : "black")};
+  }
+
+  @media ${media.mobile} {
+    width: 80%;
+
+    border-top-right-radius: ${({
+      isActive,
+      isAdjacentTop,
+      isAdjacentBelow,
+    }) =>
+      isActive ? "0px" : isAdjacentTop ? "50px" : isAdjacentBelow ? "0" : "0"};
+
+    border-bottom-right-radius: ${({
+      isActive,
+      isAdjacentTop,
+      isAdjacentBelow,
+    }) =>
+      isActive ? "0px" : isAdjacentTop ? "0" : isAdjacentBelow ? "0" : "0"};
+
+    border-top-left-radius: ${({ isActive, isAdjacentTop, isAdjacentBelow }) =>
+      isActive ? "0px" : isAdjacentTop ? "0" : isAdjacentBelow ? "50px" : "0"};
+
+    h3,
+    h5 {
+      font-size: 16px;
+    }
   }
 `;
 

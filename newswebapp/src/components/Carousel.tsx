@@ -1,10 +1,30 @@
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 
-const Carousel = ({ articles }) => {
+//BreakPoints
+const sizes = {
+  desktop: "1024px",
+  tablet: "1000px",
+  mobile: "480px",
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
+type Articles = {
+  articles: {
+    urlToImage: string;
+    title: string;
+    description: string;
+  }[];
+};
+
+const Carousel = ({ articles }: Articles) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -51,6 +71,10 @@ const CarouselSlide = styled.div`
   display: flex;
   border-radius: 20px;
   height: 500px;
+
+  @media ${media.mobile} {
+    height: 300px;
+  }
 `;
 
 const SlideText = styled.div`
@@ -70,6 +94,16 @@ const SlideText = styled.div`
     color: white;
     font-size: 1rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  @media ${media.mobile} {
+    h3 {
+      font-size: 24px;
+    }
+
+    p {
+      display: none;
+    }
   }
 `;
 

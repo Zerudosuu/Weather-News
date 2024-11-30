@@ -1,6 +1,13 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
-export const WeatherAppContext = createContext({
+interface WeatherAppContextType {
+  activeIndex: number;
+
+  setActiveIndex: Dispatch<SetStateAction<number>>;
+}
+
+export const WeatherAppContext = createContext<WeatherAppContextType>({
   activeIndex: 0,
+
   setActiveIndex: () => {},
 });

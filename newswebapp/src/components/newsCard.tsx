@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-const NewsCard = ({ article }) => {
-  const truncateTitle = (title, maxLength) => {
+type Article = {
+  article: {
+    urlToImage: string;
+    title: string;
+    description: string;
+    url: string;
+    author: string;
+  };
+};
+const NewsCard = ({ article }: Article) => {
+  const truncateTitle = (title: string, maxLength: number) => {
     if (title.length > maxLength) {
       return title.slice(0, maxLength) + "...";
     }
@@ -33,11 +41,13 @@ const CardContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
+
+  margin-bottom: 20px;
   padding: 20px;
   background-color: #f9f9f9;
   transition: transform 0.2s;
   overflow: hidden;
+  width: 100%;
 
   &:hover {
     transform: translateY(-5px);

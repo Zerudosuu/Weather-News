@@ -1,5 +1,5 @@
 import Header from "../partials/Header.tsx";
-import Footer from "../partials/Footer.tsx";
+
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +10,6 @@ const RootLayout = () => {
       <Content>
         <Outlet />
       </Content>
-      <Footer />
     </RootMain>
   );
 };
