@@ -326,15 +326,17 @@ const App = (): JSX.Element => {
             </Text>
 
             <WeatherIcons
-              condition={fiveDaysForecast.list[0].weather[0]?.main}
+              condition={fiveDaysForecast.list[activeIndex].weather[0]?.main}
               iconSize={200}
               iconColor="black"
             />
             <Text style={{ color: "black", fontSize: 60 }}>
-              {Math.round(fiveDaysForecast.list[0].temp.day)} °C
+              {Math.round(fiveDaysForecast.list[activeIndex].temp.day)} °C
             </Text>
             <Text style={{ color: "black", fontSize: 18 }}>
-              {fiveDaysForecast.list[0].weather[0].description.toUpperCase()}
+              {fiveDaysForecast.list[
+                activeIndex
+              ].weather[0].description.toUpperCase()}
             </Text>
           </View>
         </View>

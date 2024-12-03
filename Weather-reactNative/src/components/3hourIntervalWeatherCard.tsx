@@ -20,7 +20,16 @@ const WeatherCard = ({ weather, index }: { weather: any; index: number }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 16, fontWeight: 900, alignItems: "center" }}>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: 900,
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          textAlign: "center",
+        }}
+      >
         {" "}
         {formatDate(weather.dt_txt)}
       </Text>
@@ -40,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0edff",
     borderRadius: 20,
     padding: 15,
-    margin: 5,
+    margin: 3,
     elevation: 5,
     width: 100,
     justifyContent: "space-around",
