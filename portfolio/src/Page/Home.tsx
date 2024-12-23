@@ -38,6 +38,10 @@ function LandingPage() {
             scale: scale1,
           }}
         >
+          <div className="onlineContainer">
+            <div className="Circle"></div>
+            <p>AVAILABLE FOR WORK</p>
+          </div>
           RONALD <br />
           SALVADOR
         </motion.h1>
@@ -116,6 +120,26 @@ const LandingPageStyle = styled(motion.div)`
     justify-content: center;
     align-items: center;
     line-height: 0.8;
+
+    .onlineContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      margin-bottom: 1rem;
+
+      p {
+        font-weight: 400;
+      }
+
+      .Circle {
+        height: 15px;
+        width: 15px;
+        background-color: green;
+        border-radius: 50%;
+      }
+    }
 
     h1 {
       text-align: center;

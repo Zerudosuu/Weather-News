@@ -26,6 +26,14 @@ function Header() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
+  // const container = {
+  //   show: {
+  //     transition: {
+  //       staggerChildren: 0.35,
+  //     },
+  //   },
+  // };
+
   return (
     <>
       <HeaderStyle>
@@ -82,7 +90,7 @@ const HeaderStyle = styled.nav`
   width: 100%;
   z-index: 0;
   padding: 0 5rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   .Logo {
     a {

@@ -344,13 +344,13 @@ const Experience = [
     Description:
       "Contributed as both a programmer and lead artist for TechQuest 360, an educational game designed to teach kids about technology. Played a central role in developing engaging visuals and implementing gameplay features.",
   },
-  {
-    Company: "FordyTech",
-    Role: "Intern Software Engineer",
-    Year: "2024 - Present",
-    Description:
-      "I worked as an intern software engineer for FordyTech. I was responsible for developing a web-based applications for the team.",
-  },
 ];
 
+// {
+//   Company: "FordyTech",
+//   Role: "Intern Software Engineer",
+//   Year: "2024 - Present",
+//   Description:
+//     "I worked as an intern software engineer for FordyTech. I was responsible for developing a web-based applications for the team.",
+// },
 export { projects, Expertise, Experience };
