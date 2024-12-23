@@ -1,7 +1,3 @@
-import Wanderer from "../assets/Wanderer/WANDERER.png";
-import Spaceshooter from "../assets/SpaceShooter/Spaceshooter.png";
-import TechQuest from "../assets/TechQuest/TechQuest.png";
-
 //CHROMA
 import Chroma from "../assets/Chroma/Chroma.png";
 import FirstPhoto from "../assets/Chroma/FirstPhoto.jpg";
@@ -9,7 +5,28 @@ import SecondPhoto from "../assets/Chroma/SecondPhoto.jpg";
 
 //ARANG
 import Arang from "../assets/Arang/Arang.png";
+import Arang1 from "../assets/Arang/Arang1.png";
 import Arang3 from "../assets/Arang/Arang3.png";
+
+//Capstone
+import Capstone1 from "../assets/Capstone/Capstone1.png";
+import Capstone2 from "../assets/Capstone/Capstone2.png";
+import Capstone3 from "../assets/Capstone/Capstone3.png";
+
+//Wanderer
+import Wanderer from "../assets/Wanderer/WANDERER.png";
+import Wanderer1 from "../assets/Wanderer/Wanderer1.png";
+import Wanderer2 from "../assets/Wanderer/Wanderer2.png";
+
+//SpaceShooter
+import Spaceshooter from "../assets/SpaceShooter/Spaceshooter.png";
+import SpaceShooter1 from "../assets/SpaceShooter/SpaceShooter1.png";
+import SpaceShooter2 from "../assets/SpaceShooter/SpaceShooter2.png";
+
+//TechQuest
+import TechQuest from "../assets/TechQuest/TechQuest.png";
+import TechQuest1 from "../assets/TechQuest/TechQuest1.png";
+import TechQuest2 from "../assets/TechQuest/TechQuest2.png";
 
 const projects = [
   {
@@ -105,8 +122,8 @@ const projects = [
         ],
         ListOfImages: {
           Image1: Wanderer,
-          Image2: "https://via.placeholder.com/300x400",
-          Image3: "https://via.placeholder.com/300x400",
+          Image2: Wanderer1,
+          Image3: Wanderer2,
         },
       },
     ],
@@ -152,7 +169,7 @@ const projects = [
         ],
         ListOfImages: {
           Image1: Arang,
-          Image2: Arang3,
+          Image2: Arang1,
           Image3: Arang3,
         },
       },
@@ -199,8 +216,8 @@ const projects = [
         ],
         ListOfImages: {
           Image1: Spaceshooter,
-          Image2: "https://via.placeholder.com/300x400",
-          Image3: "https://via.placeholder.com/300x400",
+          Image2: SpaceShooter1,
+          Image3: SpaceShooter2,
         },
       },
     ],
@@ -246,8 +263,8 @@ const projects = [
         ],
         ListOfImages: {
           Image1: TechQuest,
-          Image2: "https://via.placeholder.com/300x400",
-          Image3: "https://via.placeholder.com/300x400",
+          Image2: TechQuest1,
+          Image3: TechQuest2,
         },
       },
     ],
@@ -259,7 +276,7 @@ const projects = [
       "A capstone project designed to demonstrate advanced game development techniques in a scientific setting.",
     Role: "Main Programmer",
     year: "2024",
-    image: "https://via.placeholder.com/300x400",
+    image: Capstone1,
     GameType: "2D",
     Concept:
       "Scientific Adventure\n" +
@@ -292,9 +309,9 @@ const projects = [
           },
         ],
         ListOfImages: {
-          Image1: "https://via.placeholder.com/300x400",
-          Image2: "https://via.placeholder.com/300x400",
-          Image3: "https://via.placeholder.com/300x400",
+          Image1: Capstone1,
+          Image2: Capstone2,
+          Image3: Capstone3,
         },
       },
     ],

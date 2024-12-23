@@ -9,10 +9,9 @@ import Works from "./Page/Works.tsx";
 import RootLayout from "./Layouts/RootLayout.tsx";
 import Work from "./Page/Work.tsx";
 
-// import Header from "./Partials/Header.tsx";
-
 function App() {
   const location = useLocation();
+
   useEffect(() => {
     const lenis = new Lenis();
 
@@ -26,7 +25,8 @@ function App() {
 
   return (
     <>
-      {/*<Header />*/}
+      {/* ScrollToTop should wrap the routing logic */}
+
       <RootLayout>
         <Routes location={location} key={location.pathname}>
           <Route index path="/" element={<Home />} />

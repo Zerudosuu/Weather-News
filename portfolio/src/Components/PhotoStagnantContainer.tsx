@@ -38,8 +38,11 @@ const PhotoStagnantContainerStyle = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
+  margin-top: -10px;
   overflow: hidden;
   z-index: 1;
+  background-color: white;
+  border-radius: 20px;
 `;
 
 const PhotoContainer = styled(motion.div)`

@@ -30,7 +30,7 @@ function Header() {
     <>
       <HeaderStyle>
         <div className="Logo">
-          <Link to="/">Ron.</Link>
+          <Link to="/">Ron</Link>
         </div>
 
         <div className="nav-Links">
@@ -80,15 +80,11 @@ const HeaderStyle = styled.nav`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 0;
   padding: 0 5rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
   .Logo {
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-
     a {
       text-decoration: none;
       color: var(--primary-color);

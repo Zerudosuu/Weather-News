@@ -105,7 +105,7 @@ const LandingPageStyle = styled(motion.div)`
   width: 100%;
   background-color: white;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 
   .HomePage {
     display: flex;

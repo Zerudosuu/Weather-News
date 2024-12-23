@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { projects } from "../Data/projects";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 type DetailComponentProps = {
   Title: string;
@@ -29,7 +30,7 @@ function DetailComponent2({
   noBorderBottom,
 }: DetailComponentProps2) {
   return (
-    <DetailComponentStyle2 noBorderBottom={noBorderBottom}>
+    <DetailComponentStyle2 noborderbottom={noBorderBottom}>
       <h1>{Title}</h1>
       <h1>{Description}</h1>
     </DetailComponentStyle2>
@@ -91,6 +92,9 @@ function Work() {
           noBorderBottom={true}
         />
       </div>
+      <PhotoStagnantContainer
+        Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image3}
+      />
     </WorkStyleContainer>
   );
 }
@@ -100,6 +104,7 @@ const WorkStyleContainer = styled.div`
   flex-direction: column;
   height: auto;
   width: 100%;
+  z-index: 1;
 
   .ProjectTitleAndDetails {
     display: flex;
@@ -157,13 +162,13 @@ const DetailComponentStyle = styled.div`
   }
 `;
 
-const DetailComponentStyle2 = styled.div<{ noBorderBottom?: boolean }>`
+const DetailComponentStyle2 = styled.div<{ noborderbottom?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: end;
   height: 15rem;
   border-bottom: ${(props) =>
-    props.noBorderBottom ? "none" : "1px solid rgba(128, 128, 128, 0.3)"};
+    props.noborderbottom ? "none" : "1px solid rgba(128, 128, 128, 0.3)"};
 
   h1 {
     align-self: start;

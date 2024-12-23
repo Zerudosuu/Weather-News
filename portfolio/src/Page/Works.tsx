@@ -18,9 +18,9 @@ function Works() {
         </p>
       </div>
       <div className="WorksContainer">
-        {projects.map((project, index) => {
+        {projects.map((project) => {
           return (
-            <Link key={index} to={`/works/${project.id}`}>
+            <Link key={project.id} to={`/works/${project.id}`} target="_top">
               <Card1
                 Title={project.Title}
                 Role={project.Role}
