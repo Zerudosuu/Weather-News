@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { projects } from "../Data/projects";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import styled from "styled-components";
-import { useEffect } from "react";
 
 type DetailComponentProps = {
   Title: string;
