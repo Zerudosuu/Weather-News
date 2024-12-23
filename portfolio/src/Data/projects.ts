@@ -9,7 +9,6 @@ import SecondPhoto from "../assets/Chroma/SecondPhoto.jpg";
 
 //ARANG
 import Arang from "../assets/Arang/Arang.png";
-import Arang1 from "../assets/Arang/Arang1.png";
 import Arang3 from "../assets/Arang/Arang3.png";
 
 const projects = [
