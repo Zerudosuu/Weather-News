@@ -121,6 +121,17 @@ const LandingPageStyle = styled(motion.div)`
     align-items: center;
     line-height: 0.8;
 
+    svg {
+      width: 300px;
+      height: 300px;
+      fill: #242424;
+      margin: 0 auto;
+
+      position: absolute;
+      top: 185px;
+      left: 24%;
+    }
+
     .onlineContainer {
       display: flex;
       align-items: center;
@@ -131,6 +142,7 @@ const LandingPageStyle = styled(motion.div)`
 
       p {
         font-weight: 400;
+        letter-spacing: 1px;
       }
 
       .Circle {
@@ -146,6 +158,7 @@ const LandingPageStyle = styled(motion.div)`
       font-size: 10rem;
       font-weight: 900;
       color: #242424;
+      letter-spacing: -8px;
     }
 
     .JobAndLocation {

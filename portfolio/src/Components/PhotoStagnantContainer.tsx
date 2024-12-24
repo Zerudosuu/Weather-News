@@ -38,7 +38,7 @@ const PhotoStagnantContainerStyle = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  margin-top: -10px;
+  margin-top: -20px;
   overflow: hidden;
   z-index: 1;
   background-color: white;

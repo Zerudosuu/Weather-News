@@ -84,7 +84,7 @@ function Work() {
         Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image2}
         PropsHeight={"80vh"}
       />
-      <div style={{ padding: "2rem", backgroundColor: "white" }}>
+      <div style={{ padding: "4rem", backgroundColor: "white" }}>
         <DetailComponent2
           Title={"CONCEPT"}
           Description={project.Concept}
