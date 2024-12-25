@@ -318,14 +318,57 @@ const projects = [
   },
 ];
 
-const Expertise = [
+const TechStack = [
   {
-    Title: "Web Development",
-    Description: "A web-based portfolio showcasing design skills.",
+    Title: "Unity",
+    Description:
+      "Creating 2D and 3D games with Unity, focusing on gameplay mechanics, optimization, and immersive experiences.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg",
   },
   {
-    Title: "Game Development",
-    Description: "A 2D platformer game built using Unity.",
+    Title: "Blender",
+    Description:
+      "Designing 3D models, animations, and environments for use in games and interactive applications.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg",
+  },
+  {
+    Title: "Figma",
+    Description:
+      "Prototyping and designing intuitive UI/UX layouts for web and game interfaces.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+  },
+  {
+    Title: "React",
+    Description:
+      "Building interactive and responsive web applications with React and its ecosystem.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+  },
+
+  {
+    Title: "Firebase",
+    Description:
+      "Managing data for web applications with a NoSQL database system.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg",
+  },
+
+  {
+    Title: "CSS 3",
+    Description:
+      "Styling modern, responsive web designs with utility-first CSS.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+  },
+  {
+    Title: "Git & GitHub",
+    Description:
+      "Version control and collaborative development using Git and GitHub.",
+    imageLink:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
   },
 ];
 
@@ -344,13 +387,13 @@ const Experience = [
     Description:
       "Contributed as both a programmer and lead artist for TechQuest 360, an educational game designed to teach kids about technology. Played a central role in developing engaging visuals and implementing gameplay features.",
   },
+  {
+    Company: "FordyTech",
+    Role: "Intern Software Engineer",
+    Year: "2024 - Present",
+    Description:
+      "I worked as an intern software engineer for FordyTech. I was responsible for developing a web-based applications for the team.",
+  },
 ];
 
-// {
-//   Company: "FordyTech",
-//   Role: "Intern Software Engineer",
-//   Year: "2024 - Present",
-//   Description:
-//     "I worked as an intern software engineer for FordyTech. I was responsible for developing a web-based applications for the team.",
-// },
-export { projects, Expertise, Experience };
+export { projects, TechStack, Experience };

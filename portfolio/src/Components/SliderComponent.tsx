@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Experience } from "../Data/projects.ts";
+import { motion } from "framer-motion";
+import { Variants } from "framer-motion";
 
 type Experiences = {
   Company: string;
@@ -8,61 +9,149 @@ type Experiences = {
   Description: string;
 };
 
-function RightComponent({ Company, Role, Year, Description }: Experiences) {
+type TechStack = {
+  Title: string;
+  imageLink: string;
+  Description: string;
+};
+
+type RightComponentrop = {
+  Experience?: Experiences[];
+  TechStack?: TechStack[];
+  secondCard?: boolean;
+  variants?: Variants;
+  initial?: string;
+  whileInView?: string;
+  viewport?: { once?: boolean };
+  custom?: number;
+};
+
+const fadeAnimationVariants = {
+  initial: {
+    opacity: 0,
+    y: "100%",
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.1 * index,
+    },
+  }),
+};
+
+function RightComponent({
+  Experience,
+  TechStack,
+  secondCard = false,
+  custom,
+}: RightComponentrop) {
+  const experience = Experience?.[0]; // Single experience object
+  const techStack = TechStack?.[0]; // Single tech stack object
+
   return (
-    <RightComponentContainer>
-      <h1> {Company}</h1>
-      <div className="RoleandYear">
-        <h2>{Role}</h2>
-        <h2>{Year}</h2>
-      </div>
-      <p>{Description}</p>
+    <RightComponentContainer
+      secondCard={secondCard}
+      variants={fadeAnimationVariants}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.3 }}
+      custom={custom}
+    >
+      {!secondCard ? (
+        <>
+          <h1>{experience?.Company}</h1>
+          <div className="RoleandYear">
+            <h2>{experience?.Role}</h2>
+            <h2>{experience?.Year}</h2>
+          </div>
+          <p>{experience?.Description}</p>
+        </>
+      ) : (
+        <SecondCard>
+          <div className="DetailsContainer">
+            <h1>{techStack?.Title}</h1>
+            <p>{techStack?.Description}</p>
+          </div>
+          <div className="IconContaienr">
+            <div className="Icon">
+              <img
+                src={techStack?.imageLink}
+                alt={techStack?.Title || "icon"}
+              />
+            </div>
+          </div>
+        </SecondCard>
+      )}
     </RightComponentContainer>
   );
 }
 
-function SliderComponent() {
+type SliderComponentProps = {
+  reverse?: boolean;
+  TechStack?: TechStack[];
+  Experience?: Experiences[];
+  secondCard?: boolean;
+  Title: string;
+};
+
+function SliderComponent({
+  reverse = false,
+  secondCard = false,
+  Title,
+  TechStack = [],
+  Experience = [],
+}: SliderComponentProps) {
   return (
-    <SliderComponentStyle>
+    <SliderComponentStyle reverse={reverse}>
       <div className="LeftSection">
         <div className="LeftSectionTitle">
-          <h1>EXPERIENCE</h1>
+          <h1>{Title}</h1>
         </div>
       </div>
       <div className="RightSection">
-        {Experience.map((experience, index) => {
-          return (
+        {/* Render TechStack cards */}
+        {TechStack.length > 0 &&
+          TechStack.map((stack, index) => (
             <RightComponent
               key={index}
-              Company={experience.Company}
-              Role={experience.Role}
-              Year={experience.Year}
-              Description={experience.Description}
+              TechStack={[stack]}
+              secondCard={secondCard}
+              custom={index}
             />
-          );
-        })}
+          ))}
+
+        {/* Render Experience cards */}
+        {Experience.length > 0 &&
+          Experience.map((exp, index) => (
+            <RightComponent key={index} Experience={[exp]} custom={index} />
+          ))}
       </div>
     </SliderComponentStyle>
   );
 }
 
-const SliderComponentStyle = styled.div`
+const SliderComponentStyle = styled.div<{ reverse: boolean }>`
   min-height: 100vh;
   height: auto;
   background-color: #242424;
   padding: 4rem;
   display: flex;
+  flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   color: white;
   z-index: 1;
 
   .LeftSection {
     width: 100%;
-
     position: relative;
 
     .LeftSectionTitle {
       position: sticky;
       top: 5%;
+      display: flex;
+      justify-content: ${(props) =>
+        props.reverse ? "flex-end" : "flex-start"};
+      text-align: ${(props) => (props.reverse ? "right" : "left")};
 
       h1 {
         font-size: 4rem;
@@ -80,13 +169,16 @@ const SliderComponentStyle = styled.div`
   }
 `;
 
-const RightComponentContainer = styled.div`
+const RightComponentContainer = styled(motion.div)<{ secondCard: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
   width: 100%;
   border-bottom: 1px solid white;
   gap: 20px;
+  background-color: ${(props) => (props.secondCard ? "white" : "transparent")};
+  color: ${(props) => (props.secondCard ? "black" : "white")};
+  border-radius: ${(props) => (props.secondCard ? "10px" : "0")};
 
   h1 {
     font-size: 2rem;
@@ -107,6 +199,48 @@ const RightComponentContainer = styled.div`
   p {
     max-width: 80%;
     opacity: 0.7;
+  }
+`;
+
+const SecondCard = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .DetailsContainer {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+
+    gap: 20px;
+  }
+
+  .IconContaienr {
+    height: 100%;
+    width: 30%;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .Icon {
+      width: 80%;
+      height: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 10px;
+      background-color: #eaeaea;
+      overflow: hidden;
+    }
+
+    img {
+      width: 60%;
+      height: 50%;
+    }
   }
 `;
 export default SliderComponent;

@@ -1,6 +1,31 @@
 import styled from "styled-components";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAIL_SERVICE_ID, // Access environment variables correctly
+        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+        formRef.current!,
+        import.meta.env.VITE_EMAIL_PUBLIC_KEY,
+      )
+      .then(
+        (result) => {
+          console.log("Message sent:", result.text);
+          alert("Message sent successfully!");
+        },
+        (error) => {
+          console.error("Error:", error.text);
+          alert("Failed to send message.");
+        },
+      );
+  };
+
   return (
     <ContactWrapper>
       <Main>
@@ -10,15 +35,24 @@ function Contact() {
             My creative spirit comes alive in the digital realm. With nimble
             fingers flying across the keyboard.
           </p>
-          <form>
+          <form ref={formRef} onSubmit={sendEmail}>
             <label>
-              <input type="text" placeholder="Name" />
+              <input type="text" name="user_name" placeholder="Name" required />
             </label>
             <label>
-              <input type="email" placeholder="E-Mail" />
+              <input
+                type="email"
+                name="user_email"
+                placeholder="E-Mail"
+                required
+              />
             </label>
             <label>
-              <textarea placeholder="Message"></textarea>
+              <textarea
+                name="message"
+                placeholder="Message"
+                required
+              ></textarea>
             </label>
             <button type="submit">SEND EMAIL</button>
           </form>

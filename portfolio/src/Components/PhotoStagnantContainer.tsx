@@ -12,9 +12,9 @@ function PhotoStagnantContainer({ Image, PropsHeight }: Props) {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start start", "end center"], // Start enlarging earlier
+    offset: ["start center", "end center"], // Start enlarging earlier
   });
-  const scale1 = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const scale1 = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
 
   return (
     <PhotoStagnantContainerStyle
@@ -43,6 +43,7 @@ const PhotoStagnantContainerStyle = styled.div`
   z-index: 1;
   background-color: white;
   border-radius: 20px;
+  overflow: hidden;
 `;
 
 const PhotoContainer = styled(motion.div)`

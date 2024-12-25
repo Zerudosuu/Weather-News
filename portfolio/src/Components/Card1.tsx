@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "motion/react";
 
 type Project = {
   Title: string;
@@ -6,11 +7,32 @@ type Project = {
   year: string;
   image: string;
   GameType: string;
+  custom?: number;
 };
 
-function Card1({ Title, Role, year, image, GameType }: Project) {
+const fadeAnimationVariants = {
+  initial: {
+    opacity: 0,
+    y: "100%",
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.1 * index,
+    },
+  }),
+};
+
+function Card1({ Title, Role, year, image, GameType, custom }: Project) {
   return (
-    <CardContainerStyle>
+    <CardContainerStyle
+      variants={fadeAnimationVariants}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.3 }}
+      custom={custom}
+    >
       <div className="ImageContainer">
         <img src={image} alt="Project" />
         <div className="GameType">
@@ -28,7 +50,7 @@ function Card1({ Title, Role, year, image, GameType }: Project) {
   );
 }
 
-const CardContainerStyle = styled.div`
+const CardContainerStyle = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;

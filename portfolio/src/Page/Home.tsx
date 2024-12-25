@@ -8,6 +8,8 @@ import { useRef } from "react";
 import SliderComponent from "../Components/SliderComponent.tsx";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import FrequentlyAskedQuestion from "../Components/FrequentlyAskedQuestion.tsx";
+import { Experience, TechStack } from "../Data/projects.ts";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
   const container = useRef(null);
@@ -37,6 +39,13 @@ function LandingPage() {
           style={{
             scale: scale1,
           }}
+          variants={{
+            hidden: { opacity: 0, y: "100%" },
+            show: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.5 }}
         >
           <div className="onlineContainer">
             <div className="Circle"></div>
@@ -46,10 +55,19 @@ function LandingPage() {
           SALVADOR
         </motion.h1>
 
-        <div className="JobAndLocation">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: "200%" },
+            show: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.9 }}
+          className="JobAndLocation"
+        >
           <p> BASED IN NAGA CITY, PH</p>
           <p>GAME DEVELOPER & SOFTWARE ENGINEER</p>
-        </div>
+        </motion.div>
       </div>
     </LandingPageStyle>
   );
@@ -63,9 +81,9 @@ function LastPage() {
           LET 'S WORK <br /> TOGETHER
         </h1>
         <Button>
-          CONTACT ME
+          <Link to={"/Contact"}>CONTACT ME</Link>
           <div className="overLayHover">
-            <p> CONTACT ME</p>
+            <Link to={"/Contact"}>CONTACT ME</Link>
           </div>
         </Button>
       </div>
@@ -93,8 +111,15 @@ function Home() {
           <About />
         </Panel>
       </PhotoContainer>
-      <Works />
-      <SliderComponent />
+
+      <Works isHeaderIncluded={true} />
+      <SliderComponent Title={"EXPERIENCE"} Experience={Experience} />
+      <SliderComponent
+        Title={"FAVOURITE TOOLS"}
+        reverse={true}
+        secondCard={true}
+        TechStack={TechStack}
+      />
       <PhotoStagnantContainer Image={"/Hireme2.png"} />
       <FrequentlyAskedQuestion />
       <LastPage />

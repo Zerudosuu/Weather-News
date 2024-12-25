@@ -24,6 +24,15 @@ const About = () => {
 
   const scale1 = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
   const opacity2 = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  const handleDownloadResume = () => {
+    // Handle the download result
+    const link = document.createElement("a");
+    link.href = "/Ronald'sResume.pdf";
+    link.download = "RonaldSalvadorResume.pdf";
+    link.click();
+  };
+
   return (
     <AboutContainer ref={targetRef}>
       <MoreAboutContainer
@@ -33,38 +42,59 @@ const About = () => {
         }}
         className="MoreAboutContainer"
       >
-        <h1>
+        <motion.h1
+          variants={{
+            hidden: { opacity: 0, y: "100%" },
+            show: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.5 }}
+        >
           MORE ABOUT <br /> <span> RONALD </span>{" "}
-        </h1>
+        </motion.h1>
       </MoreAboutContainer>
 
       <div className="ImageAndDescriptionContainer">
         <ImageIntroComponent />
 
         <div className="AboutMe">
-          <h1 style={{ textAlign: "center" }}>
+          <motion.h1
+            style={{ textAlign: "center" }}
+            variants={{
+              hidden: { opacity: 0, y: "100%" },
+              show: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate="show"
+            transition={{ duration: 0.5 }}
+          >
             I'M A CREATIVE GAME DEVELOPER AND SOFTWARE ENGINEER BASED IN THE
             PHILIPPINES. MY PASSION FOR IMMERSIVE GAMEPLAY, CLEAN CODE
             ARCHITECTURE, AND INTUITIVE USER EXPERIENCES DRIVES MY WORK,
             COMBINING TECHNICAL PRECISION WITH CREATIVE INNOVATION.
-          </h1>
+          </motion.h1>
 
-          <h3>
+          <motion.h3
+            variants={{
+              hidden: { opacity: 0, y: "120%" },
+              show: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate="show"
+            transition={{ duration: 0.5 }}
+          >
             I'm on cutting edge of game development and software engineering,
             pushing the boundaries of the technology and bring creative visions
             to life. Though my approach may be unconventional, my dedication to
             the craft is unmatched. I thrived on finding "Unexpected solutions"
             and believe that with the right perspective, technology and design
             can be transform experiences and inspire connections.
-          </h3>
+          </motion.h3>
         </div>
 
-        <Button
-          onClick={() => {
-            console.log("Hotdog");
-          }}
-        >
-          Take my resume
+        <Button onClick={handleDownloadResume}>
+          Download Resume
           <motion.div className="overLayHover">
             <p> Download Resume</p>
           </motion.div>
@@ -158,7 +188,7 @@ const MoreAboutContainer = styled(motion.div)`
 const Button = styled(motion.button)`
   background-color: var(--accent-color);
   color: var(--primary-color);
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   border-radius: 30px;
   border: none;
   cursor: pointer;
@@ -192,6 +222,7 @@ const Button = styled(motion.button)`
     transition:
       transform 0.3s ease-in-out,
       opacity 0.3s ease-in-out;
+    border: none;
   }
 
   &:hover .overLayHover {
