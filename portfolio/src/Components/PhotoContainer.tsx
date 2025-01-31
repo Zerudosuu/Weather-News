@@ -31,14 +31,15 @@ function PhotoContainer({ children }: PhotoContainerProps) {
 
   return (
     <PhotoContainerStyle ref={container}>
-      <ImageContainer
-        className="ImageContainer"
-        style={{
-          scale: scale1,
-          opacity: opacity1,
-        }}
-      >
-        <img src="/me.jpg" alt="Photo by Ronald Salvador" />
+      <ImageContainer className="ImageContainer">
+        <motion.img
+          style={{
+            scale: scale1,
+            opacity: opacity1,
+          }}
+          src="/me.jpg"
+          alt="Photo by Ronald Salvador"
+        />
       </ImageContainer>
 
       {children && children}
@@ -64,7 +65,6 @@ const ImageContainer = styled(motion.div)`
   top: 0;
   width: 100vw; /* Ensure it does not exceed the viewport width */
   z-index: -1;
-  border: 1px solid red;
   overflow: hidden;
 
   img {
