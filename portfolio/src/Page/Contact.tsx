@@ -2,6 +2,18 @@ import styled from "styled-components";
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function Contact() {
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -154,6 +166,31 @@ const FormSection = styled.section`
       }
     }
   }
+
+  @media ${media.mobile} {
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    form {
+      label {
+        input,
+        textarea {
+          padding: 1rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      button {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
 `;
 
 const ImageSection = styled.section`
@@ -167,6 +204,10 @@ const ImageSection = styled.section`
     height: 90%;
     width: 70%;
     border-radius: 10px;
+  }
+
+  @media ${media.mobile} {
+    display: none;
   }
 `;
 

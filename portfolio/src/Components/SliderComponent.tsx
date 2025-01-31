@@ -184,7 +184,7 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
     flex-direction: column;
     height: auto;
     width: 70%;
-    gap: 4rem;
+    gap: 2rem;
   }
 
   @media ${media.mobile} {
@@ -193,6 +193,7 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
 
     .RightSection {
       width: 100%;
+      margin: 2rem 0;
     }
   }
 `;
@@ -256,17 +257,18 @@ const SecondCard = styled.div`
     flex-direction: column;
     height: 100%;
     width: 80%;
-
     gap: 20px;
+ 
   }
 
   .IconContaienr {
-    height: 100%;
+    height: auto;
     width: 30%;
     margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+
 
     .Icon {
       width: 80%;
@@ -287,26 +289,16 @@ const SecondCard = styled.div`
   }
 
   @media ${media.mobile} {
+    
+
     .DetailsContainer {
       padding: 1rem;
+      width: 100%;
       gap: 10px;
     }
 
     .IconContaienr {
-      width: 100%;
-      margin-right: 0;
-      margin-top: 1rem;
-
-      .Icon {
-        width: 50%;
-        height: 50%;
-      }
-
-      img {
-        width: 40%;
-        height: 40%;
-      }
-    }
+      width: 40%;
   }
 `;
 export default SliderComponent;

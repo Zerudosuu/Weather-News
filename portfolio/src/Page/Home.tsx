@@ -124,12 +124,12 @@ function Home() {
 
       <Works isHeaderIncluded={true} />
       <SliderComponent Title={"EXPERIENCE"} Experience={Experience} />
-      <PhotoStagnantContainer Image={"/Hireme2.png"} />
       <SliderComponent
         Title={"FAVOURITE TOOLS"}
         secondCard={true}
         TechStack={TechStack}
       />
+      <PhotoStagnantContainer Image={"/Hireme2.png"} />
       <FrequentlyAskedQuestion />
       <LastPage />
     </>
@@ -232,7 +232,7 @@ const LandingPageStyle = styled(motion.div)`
 
       @media ${media.mobile} {
         p {
-          font-size: 0.8rem;
+          font-size: 0.7rem;
         }
       }
     }

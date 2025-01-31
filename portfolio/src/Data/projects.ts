@@ -355,14 +355,6 @@ const TechStack = [
     imageLink:
       "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg",
   },
-
-  {
-    Title: "CSS 3",
-    Description:
-      "Styling modern, responsive web designs with utility-first CSS.",
-    imageLink:
-      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-  },
   {
     Title: "Git & GitHub",
     Description:

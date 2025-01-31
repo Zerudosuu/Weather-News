@@ -119,11 +119,12 @@ const FooterStyle = styled.footer`
     @media ${media.mobile} {
       h1 {
         margin-top: 1rem;
-        font-size: 3rem;
+        font-size: 2rem;
+        letter-spacing: -1px;
       }
 
       .bottomCointainer {
-        padding: 10px 1rem;
+        padding: 10px 0.2rem;
         p {
           font-size: 0.8rem;
         }

@@ -36,6 +36,18 @@ function DetailComponent2({
   );
 }
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function Work() {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
@@ -61,10 +73,10 @@ function Work() {
           ))}
         </div>
       </div>
-      <PhotoStagnantContainer
-        Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image1}
-        PropsHeight={"90vh"}
-      />
+      {/*<PhotoStagnantContainer*/}
+      {/*  Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image1}*/}
+      {/*  PropsHeight={"90vh"}*/}
+      {/*/>*/}
       <ProductionContainer>
         {project.SpecifiedDetails?.[0]?.ListOfDescriptions.map(
           (detail: { Title: string; Description: string }, index: number) => (
@@ -80,10 +92,10 @@ function Work() {
           ),
         )}
       </ProductionContainer>
-      <PhotoStagnantContainer
-        Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image2}
-        PropsHeight={"80vh"}
-      />
+      {/*<PhotoStagnantContainer*/}
+      {/*  Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image2}*/}
+      {/*  PropsHeight={"80vh"}*/}
+      {/*/>*/}
       <div style={{ padding: "4rem", backgroundColor: "white" }}>
         <DetailComponent2
           Title={"CONCEPT"}
@@ -120,6 +132,12 @@ const WorkStyleContainer = styled.div`
     width: 100%;
     background-color: white;
     padding: 4rem;
+
+    @media ${media.mobile} {
+      padding: 2rem;
+      height: auto;
+      flex-direction: column;
+    }
 
     .TitleAndDescription {
       display: flex;
@@ -215,7 +233,7 @@ const ProductionContainer = styled.div`
 
   justify-content: space-evenly;
   background-color: white;
-  padding: 0 2rem;
+  padding: 0 4rem;
 `;
 
 export default Work;

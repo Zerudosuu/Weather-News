@@ -3,13 +3,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import React, { useRef } from "react";
 
 type PhotoContainerProps = {
-  children?: React.ReactNode; // The children prop is now optional
+  children?: React.ReactNode;
 };
 
 const sizes = {
-  desktop: "1024px", // Standard breakpoint for larger screens
-  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
-  mobile: "480px", // Suitable for small phones
+  desktop: "1024px",
+  tablet: "768px",
+  mobile: "480px",
 };
 
 const media = {
@@ -26,7 +26,7 @@ function PhotoContainer({ children }: PhotoContainerProps) {
     offset: ["start start", "end end"],
   });
 
-  const scale1 = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
+  const scale1 = useTransform(scrollYProgress, [0, 1], [1, 2]);
   const opacity1 = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
 
   return (
@@ -47,14 +47,12 @@ function PhotoContainer({ children }: PhotoContainerProps) {
 }
 
 const PhotoContainerStyle = styled.div`
-  height: 400vh; /* Extend the height to allow scrolling */
+  height: 400vh;
   z-index: 10;
   position: relative;
   background-color: var(--primary-color);
   display: flex;
   width: auto;
-
-  border: 1px solid red;
 `;
 
 const ImageContainer = styled(motion.div)`
@@ -64,20 +62,23 @@ const ImageContainer = styled(motion.div)`
   height: 100vh;
   position: sticky;
   top: 10%;
-  left: -10%; /* Stick the element to the top of the viewport */
-  z-index: -1;
+  /* left: -10% REMOVED */
   width: 100%;
+  z-index: -1;
+  overflow-clip: hidden;
 
   img {
     width: 100%;
     height: 100%;
-    display: flex;
     object-fit: cover;
   }
 
   @media ${media.mobile} {
     height: 40vh;
-    width: 100%;
+
+    img {
+      height: 100vh;
+    }
   }
 `;
 

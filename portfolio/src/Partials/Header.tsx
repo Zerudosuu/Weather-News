@@ -165,7 +165,8 @@ const HeaderStyleContainer = styled.nav`
   justify-content: space-between;
   padding: 0 4rem;
 
-  @media ${media.tablet} {
+  @media ${media.mobile} {
+    padding: 0 2rem;
   }
 `;
 
@@ -219,6 +220,13 @@ const ButtonCloseOpenContainer = styled.button`
     width: 3rem;
     height: 3rem;
   }
+
+  @media ${media.mobile} {
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
 `;
 
 const FullscreenMenu = styled(motion.div)`
@@ -256,6 +264,22 @@ const FullscreenMenu = styled(motion.div)`
     position: absolute;
     bottom: 20px;
     left: 20px;
+  }
+
+  @media ${media.mobile} {
+    button {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+    }
+
+    .AllRightReserve {
+      bottom: 10px;
+      left: 10px;
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
   }
 `;
 
@@ -299,6 +323,16 @@ const MenuContent = styled.div`
           &::after {
             width: 100%; /* Expand the underline on hover */
           }
+        }
+      }
+    }
+  }
+
+  @media ${media.mobile} {
+    ul {
+      li {
+        a {
+          font-size: 4rem;
         }
       }
     }
