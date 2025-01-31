@@ -61,11 +61,11 @@ const ImageContainer = styled(motion.div)`
   align-items: center;
   height: 100vh;
   position: sticky;
-  top: 10%;
-  /* left: -10% REMOVED */
-  width: 100%;
+  top: 0;
+  width: 100vw; /* Ensure it does not exceed the viewport width */
   z-index: -1;
-  overflow-clip: hidden;
+  border: 1px solid red;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -74,10 +74,12 @@ const ImageContainer = styled(motion.div)`
   }
 
   @media ${media.mobile} {
-    height: 40vh;
+    height: 100vh;
+    width: 100%;
 
     img {
       height: 100vh;
+      width: 100%;
     }
   }
 `;
