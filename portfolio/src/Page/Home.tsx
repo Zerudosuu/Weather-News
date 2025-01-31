@@ -251,6 +251,10 @@ const LastPageStyle = styled.div`
   align-items: center;
   color: black;
 
+  @media ${media.tablet} {
+    padding: 1rem;
+  }
+
   @media ${media.mobile} {
     padding: 2rem;
     min-height: 100vh;
@@ -270,6 +274,12 @@ const LastPageStyle = styled.div`
       font-weight: 700;
       letter-spacing: -5px;
       text-align: center;
+    }
+
+    @media ${media.tablet} {
+      h1 {
+        font-size: 3rem;
+      }
     }
 
     @media ${media.mobile} {
@@ -295,6 +305,16 @@ const LastPageStyle = styled.div`
       -webkit-mask-size: cover;
       -webkit-mask-repeat: no-repeat;
       -webkit-mask-position: center;
+    }
+
+    @media ${media.tablet} {
+      height: 20%;
+      width: 100%;
+      overflow-x: hidden;
+
+      img {
+        height: 100%;
+      }
     }
 
     @media ${media.mobile} {
@@ -324,6 +344,13 @@ const LastPageStyle = styled.div`
       line-height: 1.2;
       text-align: center;
       letter-spacing: -1px;
+    }
+
+    @media ${media.tablet} {
+      padding: 0;
+      h1 {
+        font-size: 1.2rem;
+      }
     }
 
     @media ${media.mobile} {

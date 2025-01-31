@@ -116,6 +116,20 @@ const FooterStyle = styled.footer`
       }
     }
 
+    @media ${media.tablet} {
+      h1 {
+        font-size: 4rem;
+        letter-spacing: -8px;
+      }
+
+      .bottomCointainer {
+        padding: 10px 0.5rem;
+        p {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
     @media ${media.mobile} {
       h1 {
         margin-top: 1rem;

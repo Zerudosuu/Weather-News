@@ -93,6 +93,24 @@ const WorksStyleContainer = styled.div`
     gap: 2rem;
   }
 
+  @media ${media.tablet} {
+    .TitleAndDescription {
+      padding: 0 1rem;
+
+      h1 {
+        font-size: 5rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    .WorksContainer {
+      gap: 1rem;
+    }
+  }
+
   @media ${media.mobile} {
     .TitleAndDescription {
       padding: 0 0.5rem;

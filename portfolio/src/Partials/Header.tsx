@@ -221,6 +221,13 @@ const ButtonCloseOpenContainer = styled.button`
     height: 3rem;
   }
 
+  @media ${media.tablet} {
+    svg {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
   @media ${media.mobile} {
     svg {
       width: 2rem;
@@ -264,6 +271,22 @@ const FullscreenMenu = styled(motion.div)`
     position: absolute;
     bottom: 20px;
     left: 20px;
+  }
+
+  @media ${media.tablet} {
+    button {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .AllRightReserve {
+      bottom: 10px;
+      left: 10px;
+
+      p {
+        font-size: 1rem;
+      }
+    }
   }
 
   @media ${media.mobile} {
@@ -323,6 +346,16 @@ const MenuContent = styled.div`
           &::after {
             width: 100%; /* Expand the underline on hover */
           }
+        }
+      }
+    }
+  }
+
+  @media ${media.tablet} {
+    ul {
+      li {
+        a {
+          font-size: 6rem;
         }
       }
     }

@@ -142,6 +142,18 @@ const FrequentlyAskedQuestionStyle = styled.div`
       }
     }
 
+    @media ${media.tablet} {
+      details {
+        summary {
+          font-size: 1.2rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+
     @media ${media.mobile} {
       details {
         summary {

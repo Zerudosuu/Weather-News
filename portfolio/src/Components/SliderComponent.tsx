@@ -187,6 +187,16 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
     gap: 2rem;
   }
 
+  @media ${media.tablet} {
+    padding: 2rem;
+    flex-direction: column;
+
+    .RightSection {
+      width: 100%;
+      margin: 2rem 0;
+    }
+  }
+
   @media ${media.mobile} {
     padding: 2rem;
     flex-direction: column;
@@ -229,6 +239,23 @@ const RightComponentContainer = styled(motion.div)<{ secondCard: boolean }>`
     max-width: 80%;
     opacity: 0.7;
   }
+
+  @media ${media.tablet} {
+    padding: 1rem 0;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
   @media ${media.mobile} {
     padding: 1rem 0;
 

@@ -154,6 +154,15 @@ const AboutContainer = styled(motion.div)`
 
 
             }
+            
+             @media ${media.tablet} { 
+                width: 100%;
+                height: 100%;
+                .image1 {
+                    height: 100%;}
+                 
+             } 
+            
             @media ${media.mobile} {
                 
                 width: 150%;
@@ -180,6 +189,14 @@ const AboutContainer = styled(motion.div)`
 
                 font-weight: 400;
                 line-height: 1.5;
+            }
+            
+            
+            @media ${media.tablet} {
+                width: 90%; 
+                
+                h1 { font-size: 1.2rem}
+                h3 { font-size: 1rem}
             }
             
             @media ${media.mobile} {
