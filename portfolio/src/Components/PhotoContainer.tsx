@@ -53,6 +53,8 @@ const PhotoContainerStyle = styled.div`
   background-color: var(--primary-color);
   display: flex;
   width: auto;
+
+  border: 1px solid red;
 `;
 
 const ImageContainer = styled(motion.div)`
@@ -61,7 +63,8 @@ const ImageContainer = styled(motion.div)`
   align-items: center;
   height: 100vh;
   position: sticky;
-  top: 0; /* Stick the element to the top of the viewport */
+  top: 10%;
+  left: -10%; /* Stick the element to the top of the viewport */
   z-index: -1;
   width: 100%;
 
@@ -75,12 +78,6 @@ const ImageContainer = styled(motion.div)`
   @media ${media.mobile} {
     height: 40vh;
     width: 100%;
-
-    img {
-      width: auto%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 `;
 

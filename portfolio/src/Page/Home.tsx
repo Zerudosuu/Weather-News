@@ -8,7 +8,7 @@ import { useRef } from "react";
 import SliderComponent from "../Components/SliderComponent.tsx";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import FrequentlyAskedQuestion from "../Components/FrequentlyAskedQuestion.tsx";
-import { Experience } from "../Data/projects.ts";
+import { Experience, TechStack } from "../Data/projects.ts";
 import { Link } from "react-router-dom";
 
 const sizes = {
@@ -125,6 +125,11 @@ function Home() {
       <Works isHeaderIncluded={true} />
       <SliderComponent Title={"EXPERIENCE"} Experience={Experience} />
       <PhotoStagnantContainer Image={"/Hireme2.png"} />
+      <SliderComponent
+        Title={"FAVOURITE TOOLS"}
+        secondCard={true}
+        TechStack={TechStack}
+      />
       <FrequentlyAskedQuestion />
       <LastPage />
     </>
