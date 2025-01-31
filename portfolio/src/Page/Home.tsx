@@ -124,11 +124,6 @@ function Home() {
 
       <Works isHeaderIncluded={true} />
       <SliderComponent Title={"EXPERIENCE"} Experience={Experience} />
-      {/*<SliderComponent*/}
-      {/*  Title={"FAVOURITE TOOLS"}*/}
-      {/*  secondCard={true}*/}
-      {/*  TechStack={TechStack}*/}
-      {/*/>*/}
       <PhotoStagnantContainer Image={"/Hireme2.png"} />
       <FrequentlyAskedQuestion />
       <LastPage />
