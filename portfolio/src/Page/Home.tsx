@@ -8,7 +8,7 @@ import { useRef } from "react";
 import SliderComponent from "../Components/SliderComponent.tsx";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import FrequentlyAskedQuestion from "../Components/FrequentlyAskedQuestion.tsx";
-import { Experience, TechStack } from "../Data/projects.ts";
+import { Experience } from "../Data/projects.ts";
 import { Link } from "react-router-dom";
 
 const sizes = {

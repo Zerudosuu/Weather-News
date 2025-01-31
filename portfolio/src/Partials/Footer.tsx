@@ -99,7 +99,7 @@ const FooterStyle = styled.footer`
 
   .NameAndYearFooter {
     h1 {
-      font-size: 16rem;
+      font-size: 10rem;
       font-weight: 800;
       letter-spacing: -10px;
       line-height: 0.7;
