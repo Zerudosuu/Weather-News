@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
 function FrequentlyAskedQuestion() {
   return (
     <FrequentlyAskedQuestionStyle>
@@ -129,6 +140,29 @@ const FrequentlyAskedQuestionStyle = styled.div`
         background-color: #f3f3f3;
         color: #242424;
       }
+    }
+
+    @media ${media.mobile} {
+      details {
+        summary {
+          font-size: 1.2rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  @media ${media.mobile} {
+    padding: 2rem;
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .DetailsContainer {
+      gap: 10px;
     }
   }
 `;

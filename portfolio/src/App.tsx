@@ -8,6 +8,7 @@ import ErrorPage from "./Page/ErrorPage.tsx";
 import Works from "./Page/Works.tsx";
 import RootLayout from "./Layouts/RootLayout.tsx";
 import Work from "./Page/Work.tsx";
+import GlobalStyle from "./Styles/GlobalStyle.ts";
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function App() {
       {/* ScrollToTop should wrap the routing logic */}
 
       <RootLayout>
+        <GlobalStyle />
         <Routes location={location} key={location.pathname}>
           <Route index path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />

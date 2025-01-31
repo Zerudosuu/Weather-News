@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { projects } from "../Data/projects";
 import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import styled from "styled-components";
-
+import HorizontalWorkSuggestion from "../Components/HorizontalWorkSuggestion.tsx";
 type DetailComponentProps = {
   Title: string;
   Description: string;
@@ -94,6 +94,14 @@ function Work() {
       <PhotoStagnantContainer
         Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image3}
       />
+
+      <div className="moreWorks">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <h1 key={index}>MORE WORKS</h1>
+        ))}
+      </div>
+
+      <HorizontalWorkSuggestion GameId={id || ""} />
     </WorkStyleContainer>
   );
 }
@@ -142,6 +150,18 @@ const WorkStyleContainer = styled.div`
       height: 100%;
       width: 30%;
     }
+  }
+
+  .moreWorks {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 `;
 

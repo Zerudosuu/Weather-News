@@ -11,6 +11,18 @@ import FrequentlyAskedQuestion from "../Components/FrequentlyAskedQuestion.tsx";
 import { Experience, TechStack } from "../Data/projects.ts";
 import { Link } from "react-router-dom";
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function LandingPage() {
   const container = useRef(null);
 
@@ -107,19 +119,16 @@ function Home() {
     <>
       <LandingPage />
       <PhotoContainer>
-        <Panel>
-          <About />
-        </Panel>
+        <Panel>{<About />}</Panel>
       </PhotoContainer>
 
       <Works isHeaderIncluded={true} />
       <SliderComponent Title={"EXPERIENCE"} Experience={Experience} />
-      <SliderComponent
-        Title={"FAVOURITE TOOLS"}
-        reverse={true}
-        secondCard={true}
-        TechStack={TechStack}
-      />
+      {/*<SliderComponent*/}
+      {/*  Title={"FAVOURITE TOOLS"}*/}
+      {/*  secondCard={true}*/}
+      {/*  TechStack={TechStack}*/}
+      {/*/>*/}
       <PhotoStagnantContainer Image={"/Hireme2.png"} />
       <FrequentlyAskedQuestion />
       <LastPage />
@@ -135,6 +144,7 @@ const LandingPageStyle = styled(motion.div)`
   background-color: white;
   pointer-events: none;
   z-index: 2;
+  overflow: hidden;
 
   .HomePage {
     display: flex;
@@ -176,6 +186,12 @@ const LandingPageStyle = styled(motion.div)`
         background-color: green;
         border-radius: 50%;
       }
+
+      @media ${media.mobile} {
+        p {
+          font-size: 0.8rem;
+        }
+      }
     }
 
     h1 {
@@ -184,6 +200,14 @@ const LandingPageStyle = styled(motion.div)`
       font-weight: 900;
       color: #242424;
       letter-spacing: -8px;
+
+      @media ${media.tablet} {
+        font-size: 7rem;
+      }
+
+      @media ${media.mobile} {
+        font-size: 5rem;
+      }
     }
 
     .JobAndLocation {
@@ -198,83 +222,119 @@ const LandingPageStyle = styled(motion.div)`
         font-size: 1rem;
         font-weight: 600;
       }
+
+      @media ${media.tablet} {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      @media ${media.mobile} {
+        p {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 `;
 const LastPageStyle = styled.div`
-    background-color: white;
-    min-height: 120vh;
-    height: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
+  background-color: white;
+  min-height: 120vh;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 
-    padding: 5rem;
+  padding: 5rem;
+  align-items: center;
+  color: black;
+
+  @media ${media.mobile} {
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  .WorkWithMeContainer {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    height: 30%;
+    width: 100%;
+    gap: 5px;
+
+    h1 {
+      font-size: 5rem;
+      font-weight: 700;
+      letter-spacing: -5px;
+      text-align: center;
+    }
+
+    @media ${media.mobile} {
+      h1 {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  .ImageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+    width: 30%;
+    overflow: hidden;
+
+    img {
+      height: 40%;
+      width: 100%;
+      object-fit: cover;
+      -webkit-mask-image: url("/Ronron-removebg-preview.png");
+      -webkit-mask-size: cover;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+    }
+
+    @media ${media.mobile} {
+      height: 20%;
+      width: 100%;
+      overflow-x: hidden;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  .Description {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    padding: 0 5rem;
     color: black;
 
-    .WorkWithMeContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 30%;
-        width: 100%;
-        gap: 5px;
-
-        h1 {
-
-            font-size: 5rem;
-            font-weight: 700;
-            letter-spacing: -5px;
-            text-align: center;
-        }
-
-
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
+      letter-spacing: -1px;
     }
 
-
-    .ImageContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 30%;
-        width: 30%;
-        overflow: hidden;
-
-
-        img {
-            height: 40%;
-            width: 100%;
-            object-fit: cover;
-            -webkit-mask-image: url("/Ronron-removebg-preview.png");
-            -webkit-mask-size: cover;
-            -webkit-mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-
-        }
+    @media ${media.mobile} {
+      height: 50%;
+      width: 100%;
+      padding: 0;
+      h1 {
+        font-size: 1rem;
+      }
     }
-
-    .Description {
-        display: flex;
-        justify-content: space-evenly;
-        flex-direction: column;
-        align-items: center;
-        height: 100%;
-        width: 60%;
-        padding: 0 5rem;
-        color: black;
-
-        h1 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            line-height: 1.2;
-            text-align: center;
-            letter-spacing: -1px;
-        }
-
-
+  }
 `;
 
 const Button = styled(motion.button)`

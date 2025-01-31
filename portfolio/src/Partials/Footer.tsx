@@ -9,6 +9,18 @@ import GlobalStyle from "../Styles/GlobalStyle.ts";
 //   );
 // }
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 const ScrollToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -48,6 +60,12 @@ const Button = styled.button`
     transform: scale(0.9);
     transition: transform 0.1s ease;
   }
+
+  @media ${media.mobile} {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+  }
 `;
 
 function Footer() {
@@ -81,7 +99,7 @@ const FooterStyle = styled.footer`
 
   .NameAndYearFooter {
     h1 {
-      font-size: 10rem;
+      font-size: 16rem;
       font-weight: 800;
       letter-spacing: -10px;
       line-height: 0.7;
@@ -95,6 +113,20 @@ const FooterStyle = styled.footer`
       p {
         font-size: 1rem;
         font-weight: 400;
+      }
+    }
+
+    @media ${media.mobile} {
+      h1 {
+        margin-top: 1rem;
+        font-size: 3rem;
+      }
+
+      .bottomCointainer {
+        padding: 10px 1rem;
+        p {
+          font-size: 0.8rem;
+        }
       }
     }
   }

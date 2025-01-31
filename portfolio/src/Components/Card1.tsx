@@ -24,6 +24,18 @@ const fadeAnimationVariants = {
   }),
 };
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function Card1({ Title, Role, year, image, GameType, custom }: Project) {
   return (
     <CardContainerStyle
@@ -79,6 +91,12 @@ const CardContainerStyle = styled(motion.div)`
       padding: 0.5rem 1rem;
       color: #242424;
       box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+
+      @media ${media.mobile} {
+        h2 {
+          font-size: 1rem;
+        }
+      }
     }
 
     img {
@@ -105,6 +123,32 @@ const CardContainerStyle = styled(motion.div)`
       flex-direction: column;
       gap: 10px;
     }
+
+    h1 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 0.8rem;
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+
+  @media ${media.tablet} {
+    width: 100%;
+    height: 400px;
+  }
+
+  @media ${media.mobile} {
+    width: 100%;
+    height: 300px;
   }
 `;
 export default Card1;

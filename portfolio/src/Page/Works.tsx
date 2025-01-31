@@ -7,6 +7,18 @@ type WorksProps = {
   isHeaderIncluded?: boolean;
 };
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function Works({ isHeaderIncluded = false }: WorksProps) {
   return (
     <WorksStyleContainer>
@@ -61,6 +73,14 @@ const WorksStyleContainer = styled.div`
       font-size: 8rem;
       font-weight: 400;
     }
+
+    p {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      opacity: 0.6;
+      max-width: 70%;
+    }
   }
 
   .WorksContainer {
@@ -71,6 +91,24 @@ const WorksStyleContainer = styled.div`
     align-items: center;
 
     gap: 2rem;
+  }
+
+  @media ${media.mobile} {
+    .TitleAndDescription {
+      padding: 0 0.5rem;
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    .WorksContainer {
+      gap: 1rem;
+    }
   }
 `;
 export default Works;

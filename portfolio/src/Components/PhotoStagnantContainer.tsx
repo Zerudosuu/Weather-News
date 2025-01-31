@@ -43,7 +43,6 @@ const PhotoStagnantContainerStyle = styled.div`
   z-index: 1;
   background-color: white;
   border-radius: 20px;
-  overflow: hidden;
 `;
 
 const PhotoContainer = styled(motion.div)`

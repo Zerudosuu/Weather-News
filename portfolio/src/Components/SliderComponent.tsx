@@ -40,6 +40,18 @@ const fadeAnimationVariants = {
   }),
 };
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function RightComponent({
   Experience,
   TechStack,
@@ -157,6 +169,13 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
         font-size: 4rem;
         color: white;
       }
+
+      @media ${media.mobile} {
+        position: relative;
+        h1 {
+          font-size: 2rem;
+        }
+      }
     }
   }
 
@@ -166,6 +185,15 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
     height: auto;
     width: 70%;
     gap: 4rem;
+  }
+
+  @media ${media.mobile} {
+    padding: 2rem;
+    flex-direction: column;
+
+    .RightSection {
+      width: 100%;
+    }
   }
 `;
 
@@ -199,6 +227,21 @@ const RightComponentContainer = styled(motion.div)<{ secondCard: boolean }>`
   p {
     max-width: 80%;
     opacity: 0.7;
+  }
+  @media ${media.mobile} {
+    padding: 1rem 0;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -240,6 +283,29 @@ const SecondCard = styled.div`
     img {
       width: 60%;
       height: 50%;
+    }
+  }
+
+  @media ${media.mobile} {
+    .DetailsContainer {
+      padding: 1rem;
+      gap: 10px;
+    }
+
+    .IconContaienr {
+      width: 100%;
+      margin-right: 0;
+      margin-top: 1rem;
+
+      .Icon {
+        width: 50%;
+        height: 50%;
+      }
+
+      img {
+        width: 40%;
+        height: 40%;
+      }
     }
   }
 `;

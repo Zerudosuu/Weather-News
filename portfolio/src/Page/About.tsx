@@ -14,6 +14,18 @@ function ImageIntroComponent() {
   );
 }
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 const About = () => {
   const targetRef = useRef(null);
 
@@ -109,7 +121,6 @@ const AboutContainer = styled(motion.div)`
     flex-direction: column;
     height: 150vh;
     width: 100%;
-
     padding: 5rem 0;
     align-items: center;
     z-index: 2;
@@ -122,6 +133,8 @@ const AboutContainer = styled(motion.div)`
         justify-content: center;
         position: absolute;
         bottom: 10%;
+        overflow-x: hidden;         
+       
 
 
         .ImageContainer {
@@ -140,6 +153,13 @@ const AboutContainer = styled(motion.div)`
                 -webkit-mask-position: center;
 
 
+            }
+            @media ${media.mobile} {
+                
+                width: 150%;
+                height: 100%;
+                .image1 {
+                    height: 100%;}
             }
         }
 
@@ -161,7 +181,13 @@ const AboutContainer = styled(motion.div)`
                 font-weight: 400;
                 line-height: 1.5;
             }
-
+            
+            @media ${media.mobile} {
+                width: 90%; 
+                
+                h1 { font-size: 1rem}
+                h3 { font-size: 0.8rem}
+            }
 
         }
 `;
@@ -182,6 +208,15 @@ const MoreAboutContainer = styled(motion.div)`
 
   span {
     font-size: 5rem;
+  }
+
+  @media ${media.mobile} {
+    h1 {
+      font-size: 3rem;
+    }
+    span {
+      font-size: 3rem;
+    }
   }
 `;
 

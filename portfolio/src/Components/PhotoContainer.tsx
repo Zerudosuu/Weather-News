@@ -6,6 +6,18 @@ type PhotoContainerProps = {
   children?: React.ReactNode; // The children prop is now optional
 };
 
+const sizes = {
+  desktop: "1024px", // Standard breakpoint for larger screens
+  tablet: "768px", // Common tablet breakpoint (e.g., iPads)
+  mobile: "480px", // Suitable for small phones
+};
+
+const media = {
+  desktop: `(max-width: ${sizes.desktop})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  mobile: `(max-width: ${sizes.mobile})`,
+};
+
 function PhotoContainer({ children }: PhotoContainerProps) {
   const container = useRef(null);
 
@@ -39,6 +51,8 @@ const PhotoContainerStyle = styled.div`
   z-index: 10;
   position: relative;
   background-color: var(--primary-color);
+  display: flex;
+  width: auto;
 `;
 
 const ImageContainer = styled(motion.div)`
@@ -49,11 +63,24 @@ const ImageContainer = styled(motion.div)`
   position: sticky;
   top: 0; /* Stick the element to the top of the viewport */
   z-index: -1;
+  width: 100%;
 
   img {
     width: 100%;
     height: 100%;
+    display: flex;
     object-fit: cover;
+  }
+
+  @media ${media.mobile} {
+    height: 40vh;
+    width: 100%;
+
+    img {
+      width: auto%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 `;
 
