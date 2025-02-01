@@ -70,11 +70,7 @@ const projects = [
           },
         ],
 
-        ListOfImages: {
-          Image1: Chroma,
-          Image2: FirstPhoto,
-          Image3: SecondPhoto,
-        },
+        ListOfImages: [Chroma, FirstPhoto, SecondPhoto],
       },
     ],
   },
@@ -120,11 +116,7 @@ const projects = [
               "Implemented character controls, terrain physics, and challenging obstacles. Optimized gameplay for fluidity and excitement across various game levels.",
           },
         ],
-        ListOfImages: {
-          Image1: Wanderer,
-          Image2: Wanderer1,
-          Image3: Wanderer2,
-        },
+        ListOfImages: [Wanderer, Wanderer1, Wanderer2],
       },
     ],
   },
@@ -167,11 +159,7 @@ const projects = [
               "During development, the core mechanics of the game were implemented, including AI behaviors, player to protect the tower, and resource management. The programming team focused on ensuring that enemy behaviors and wave progressions were both challenging and balanced. A robust upgrade system was added to allow players to improve their defenses and adapt to the increasing difficulty of enemy waves. Development also included optimizing transitions between waves, enhancing performance, and integrating visual and sound effects to heighten player immersion. Extensive testing ensured that gameplay mechanics worked seamlessly and provided a smooth experience across various devices.",
           },
         ],
-        ListOfImages: {
-          Image1: Arang,
-          Image2: Arang1,
-          Image3: Arang3,
-        },
+        ListOfImages: [Arang, Arang1, Arang3],
       },
     ],
   },
@@ -214,11 +202,7 @@ const projects = [
               "Programmed shooting mechanics, player controls, and high-score systems in Unity. Optimized gameplay for smooth performance and quick responsiveness.",
           },
         ],
-        ListOfImages: {
-          Image1: Spaceshooter,
-          Image2: SpaceShooter1,
-          Image3: SpaceShooter2,
-        },
+        ListOfImages: [Spaceshooter, SpaceShooter1, SpaceShooter2],
       },
     ],
   },
@@ -238,8 +222,8 @@ const projects = [
     SpecifiedDetails: [
       {
         Details: [
-          { Title: "Project", Description: "TechQuest 360" },
-          { Title: "Year", Description: "2024" },
+          { Title: "Project", Description: "TechQuest 360 (on going)" },
+          { Title: "Year", Description: "2024 - Present" },
           { Title: "Category", Description: "Educational Game" },
           { Title: "Role", Description: "Programmer, Designer" },
           { Title: "Tools", Description: "Unity, Adobe Illustrator, C#" },
@@ -261,11 +245,7 @@ const projects = [
               "Implemented educational content and player progression systems. Ensured smooth transitions between levels and optimized gameplay for accessibility.",
           },
         ],
-        ListOfImages: {
-          Image1: TechQuest,
-          Image2: TechQuest1,
-          Image3: TechQuest2,
-        },
+        ListOfImages: [TechQuest, TechQuest1, TechQuest2],
       },
     ],
   },
@@ -285,8 +265,8 @@ const projects = [
     SpecifiedDetails: [
       {
         Details: [
-          { Title: "Project", Description: "Anton's Laboratory" },
-          { Title: "Year", Description: "2024" },
+          { Title: "Project", Description: "Anton's Laboratory (on going)" },
+          { Title: "Year", Description: "2024 - Present" },
           { Title: "Category", Description: "Capstone Project" },
           { Title: "Role", Description: "Main Programmer" },
           { Title: "Tools", Description: "Unity, Photoshop, C#" },
@@ -308,11 +288,7 @@ const projects = [
               "Programmed core mechanics, puzzle logic, and dynamic environments. Optimized the game for performance and seamless gameplay.",
           },
         ],
-        ListOfImages: {
-          Image1: Capstone1,
-          Image2: Capstone2,
-          Image3: Capstone3,
-        },
+        ListOfImages: [Capstone1, Capstone2, Capstone3],
       },
     ],
   },

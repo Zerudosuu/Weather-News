@@ -1,18 +1,20 @@
 import { useParams } from "react-router-dom";
 import { projects } from "../Data/projects";
-import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
+// import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
 import styled from "styled-components";
 import HorizontalWorkSuggestion from "../Components/HorizontalWorkSuggestion.tsx";
+import { useState } from "react";
+import { motion } from "framer-motion";
 type DetailComponentProps = {
   Title: string;
   Description: string;
 };
-
-type DetailComponentProps2 = {
-  Title: string;
-  Description: string;
-  noBorderBottom?: boolean;
-};
+//
+// type DetailComponentProps2 = {
+//   Title: string;
+//   Description: string;
+//   noBorderBottom?: boolean;
+// };
 
 function DetailComponent({ Title, Description }: DetailComponentProps) {
   return (
@@ -23,18 +25,18 @@ function DetailComponent({ Title, Description }: DetailComponentProps) {
   );
 }
 
-function DetailComponent2({
-  Title,
-  Description,
-  noBorderBottom,
-}: DetailComponentProps2) {
-  return (
-    <DetailComponentStyle2 noborderbottom={noBorderBottom}>
-      <h1>{Title}</h1>
-      <h1>{Description}</h1>
-    </DetailComponentStyle2>
-  );
-}
+// function DetailComponent2({
+//   Title,
+//   Description,
+//   noBorderBottom,
+// }: DetailComponentProps2) {
+//   return (
+//     <DetailComponentStyle2 noborderbottom={noBorderBottom}>
+//       <h1>{Title}</h1>
+//       <h1>{Description}</h1>
+//     </DetailComponentStyle2>
+//   );
+// }
 
 const sizes = {
   desktop: "1024px", // Standard breakpoint for larger screens
@@ -52,12 +54,39 @@ function Work() {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
 
+  // State to track the currently selected image
+  const [selectedImage, setSelectedImage] = useState(project?.image || "");
+
   if (!project) {
     return <div style={{ color: "Black" }}>Work not found</div>;
   }
 
   return (
     <WorkStyleContainer>
+      <MainBanner>
+        <MainShowCase>
+          <img src={selectedImage} alt="photo" />
+          <ImagesContainer>
+            {project.SpecifiedDetails[0].ListOfImages.map((img, index) => (
+              <motion.div
+                onClick={() => setSelectedImage(img)} // Click to change the main image
+                className="SelectOption"
+                key={index}
+                style={{ cursor: "pointer" }}
+                whileHover={{
+                  y: -20,
+                }} // Make it clear it's clickable
+              >
+                <img src={img} alt={`Thumbnail ${index + 1}`} />
+              </motion.div>
+            ))}
+          </ImagesContainer>
+        </MainShowCase>
+        <div className="GamePoster">
+          <img src={project.image} alt="photo" />
+        </div>
+      </MainBanner>
+
       <div className="ProjectTitleAndDetails">
         <div className="TitleAndDescription">
           <h1>{project.Title}</h1>
@@ -73,46 +102,11 @@ function Work() {
           ))}
         </div>
       </div>
-      {/*<PhotoStagnantContainer*/}
-      {/*  Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image1}*/}
-      {/*  PropsHeight={"90vh"}*/}
-      {/*/>*/}
-      <ProductionContainer>
-        {project.SpecifiedDetails?.[0]?.ListOfDescriptions.map(
-          (detail: { Title: string; Description: string }, index: number) => (
-            <DetailComponent2
-              key={index}
-              Title={detail.Title}
-              Description={detail.Description}
-              noBorderBottom={
-                index ===
-                project.SpecifiedDetails[0].ListOfDescriptions.length - 1
-              }
-            />
-          ),
-        )}
-      </ProductionContainer>
-      {/*<PhotoStagnantContainer*/}
-      {/*  Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image2}*/}
-      {/*  PropsHeight={"80vh"}*/}
-      {/*/>*/}
-      <div style={{ padding: "4rem", backgroundColor: "white" }}>
-        <DetailComponent2
-          Title={"CONCEPT"}
-          Description={project.Concept}
-          noBorderBottom={true}
-        />
-      </div>
-      <PhotoStagnantContainer
-        Image={project.SpecifiedDetails?.[0]?.ListOfImages?.Image3}
-      />
-
       <div className="moreWorks">
         {Array.from({ length: 6 }).map((_, index) => (
           <h1 key={index}>MORE WORKS</h1>
         ))}
       </div>
-
       <HorizontalWorkSuggestion GameId={id || ""} />
     </WorkStyleContainer>
   );
@@ -128,10 +122,16 @@ const WorkStyleContainer = styled.div`
   .ProjectTitleAndDetails {
     display: flex;
     justify-content: space-between;
-    height: 60vh;
+    height: 50vh;
     width: 100%;
     background-color: white;
-    padding: 4rem;
+    padding: 2rem 4rem;
+
+    @media ${media.tablet} {
+      padding: 1rem;
+      flex-direction: column;
+      height: auto;
+    }
 
     @media ${media.mobile} {
       padding: 2rem;
@@ -159,6 +159,26 @@ const WorkStyleContainer = styled.div`
         line-height: 1.5;
         opacity: 0.6;
       }
+
+      @media ${media.tablet} {
+        width: 100%;
+        h1 {
+          font-size: 3rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      @media ${media.mobile} {
+        width: 100%;
+        h1 {
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
     }
 
     .Details {
@@ -167,6 +187,15 @@ const WorkStyleContainer = styled.div`
       justify-content: center;
       height: 100%;
       width: 30%;
+      margin-bottom: 2rem;
+
+      @media ${media.tablet} {
+        width: 100%;
+      }
+
+      @media ${media.mobile} {
+        width: 100%;
+      }
     }
   }
 
@@ -180,6 +209,17 @@ const WorkStyleContainer = styled.div`
     color: black;
     font-size: 1.5rem;
     font-weight: 600;
+    padding: 0 2rem;
+
+    @media ${media.tablet} {
+      padding: 1rem;
+    }
+
+    @media ${media.mobile} {
+      h1 {
+        font-size: 1rem;
+      }
+    }
   }
 `;
 
@@ -197,43 +237,145 @@ const DetailComponentStyle = styled.div`
   :nth-child(2) {
     opacity: 0.5;
   }
-`;
 
-const DetailComponentStyle2 = styled.div<{ noborderbottom?: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  height: 15rem;
-  border-bottom: ${(props) =>
-    props.noborderbottom ? "none" : "1px solid rgba(128, 128, 128, 0.3)"};
-
-  h1 {
-    align-self: start;
-    font-size: 1.8rem;
-    line-height: 1.4;
-    opacity: 0.5;
+  @media ${media.tablet} {
+    width: 100%;
+    h1 {
+      font-size: 1rem;
+    }
   }
 
-  :nth-child(2) {
-    height: 100%;
-    width: 40%;
-    font-size: 1.1rem;
-    opacity: 0.8;
-    line-height: 1.5;
-    padding-bottom: 2rem;
+  @media ${media.mobile} {
+    width: 100%;
+    h1 {
+      font-size: 1rem;
+    }
   }
 `;
 
-const ProductionContainer = styled.div`
-  min-height: 100vh;
-  height: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+// const DetailComponentStyle2 = styled.div<{ noborderbottom?: boolean }>`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: end;
+//   height: 15rem;
+//   border-bottom: ${(props) =>
+//     props.noborderbottom ? "none" : "1px solid rgba(128, 128, 128, 0.3)"};
+//
+//   h1 {
+//     align-self: start;
+//     font-size: 1.8rem;
+//     line-height: 1.4;
+//     opacity: 0.5;
+//   }
+//
+//   :nth-child(2) {
+//     height: 100%;
+//     width: 40%;
+//     font-size: 1.1rem;
+//     opacity: 0.8;
+//     line-height: 1.5;
+//     padding-bottom: 2rem;
+//   }
+// `;
 
-  justify-content: space-evenly;
+const MainBanner = styled.div`
+  height: 70vh;
+  display: flex;
+
+  padding: 2rem 4rem;
   background-color: white;
-  padding: 0 4rem;
+  gap: 1rem;
+
+  .GamePoster {
+    height: 100%;
+    width: 30%;
+    border: 1px solid black;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @media ${media.tablet} {
+    flex-direction: column-reverse;
+    padding: 1rem;
+    height: 100vh;
+
+    .GamePoster {
+      width: 100%;
+      height: 60%;
+    }
+  }
+
+  @media ${media.mobile} {
+    height: 70vh;
+    flex-direction: column-reverse;
+
+    .GamePoster {
+      width: 100%;
+      height: 50%;
+    }
+  }
+`;
+
+const MainShowCase = styled.div`
+  height: 100%;
+  width: 70%;
+  border: 1px solid #5e1212;
+  background-color: white;
+  position: relative;
+  display: flex;
+  align-items: end;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media ${media.tablet} {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media ${media.mobile} {
+    width: 100%;
+    height: 100%;
+
+    img {
+      object-fit: contain;
+    }
+  }
+`;
+
+const ImagesContainer = styled.div`
+  display: flex;
+  height: 15%;
+  width: 70%;
+  gap: 1rem;
+
+  position: absolute;
+  margin: 2rem;
+
+  .SelectOption {
+    height: 100%;
+    width: 15%;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  @media ${media.tablet} {
+    gap: 1rem;
+    width: 100%;
+  }
+
+  @media ${media.mobile} {
+    display: none;
+  }
 `;
 
 export default Work;

@@ -167,6 +167,31 @@ const FormSection = styled.section`
     }
   }
 
+  @media ${media.tablet} {
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    form {
+      label {
+        input,
+        textarea {
+          padding: 1rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      button {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
   @media ${media.mobile} {
     h1 {
       font-size: 2rem;
@@ -204,6 +229,10 @@ const ImageSection = styled.section`
     height: 90%;
     width: 70%;
     border-radius: 10px;
+  }
+
+  @media ${media.tablet} {
+    display: none;
   }
 
   @media ${media.mobile} {
