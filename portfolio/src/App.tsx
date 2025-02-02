@@ -26,8 +26,6 @@ function App() {
 
   return (
     <>
-      {/* ScrollToTop should wrap the routing logic */}
-
       <RootLayout>
         <GlobalStyle />
         <Routes location={location} key={location.pathname}>
