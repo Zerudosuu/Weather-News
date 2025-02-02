@@ -100,7 +100,6 @@ function RightComponent({
 }
 
 type SliderComponentProps = {
-  reverse?: boolean;
   TechStack?: TechStack[];
   Experience?: Experiences[];
   secondCard?: boolean;
@@ -108,14 +107,13 @@ type SliderComponentProps = {
 };
 
 function SliderComponent({
-  reverse = false,
   secondCard = false,
   Title,
   TechStack = [],
   Experience = [],
 }: SliderComponentProps) {
   return (
-    <SliderComponentStyle reverse={reverse}>
+    <SliderComponentStyle>
       <div className="LeftSection">
         <div className="LeftSectionTitle">
           <h1>{Title}</h1>
@@ -143,13 +141,13 @@ function SliderComponent({
   );
 }
 
-const SliderComponentStyle = styled.div<{ reverse: boolean }>`
+const SliderComponentStyle = styled.div`
   min-height: 100vh;
   height: auto;
   background-color: #242424;
   padding: 4rem;
   display: flex;
-  flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
+  flex-direction: row;
   color: white;
   z-index: 1;
 
@@ -161,9 +159,8 @@ const SliderComponentStyle = styled.div<{ reverse: boolean }>`
       position: sticky;
       top: 5%;
       display: flex;
-      justify-content: ${(props) =>
-        props.reverse ? "flex-end" : "flex-start"};
-      text-align: ${(props) => (props.reverse ? "right" : "left")};
+      justify-content: flex-start;
+      text-align: left;
 
       h1 {
         font-size: 4rem;

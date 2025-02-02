@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route } from "react-router";
 import Lenis from "lenis";
 import { useEffect } from "react";
 
@@ -11,8 +11,6 @@ import Work from "./Page/Work.tsx";
 import GlobalStyle from "./Styles/GlobalStyle.ts";
 
 function App() {
-  const location = useLocation();
-
   useEffect(() => {
     const lenis = new Lenis();
 
@@ -26,9 +24,9 @@ function App() {
 
   return (
     <>
+      <GlobalStyle />
       <RootLayout>
-        <GlobalStyle />
-        <Routes location={location} key={location.pathname}>
+        <Routes>
           <Route index path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/Works" element={<Works />} />
