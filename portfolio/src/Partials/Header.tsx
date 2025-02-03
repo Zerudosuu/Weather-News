@@ -216,6 +216,7 @@ const ButtonCloseOpenContainer = styled.button`
   display: flex;
   background-color: white;
   border: none;
+  cursor: pointer;
   svg {
     width: 3rem;
     height: 3rem;

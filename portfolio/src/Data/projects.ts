@@ -132,7 +132,7 @@ const projects = [
               "Transitioning from 2D to 3D introduced new complexities, particularly in physics and raycasting. Unlike in 2D, where collision detection and movement are relatively straightforward, working in a 3D space required a deeper understanding of forces, gravity, and object interactions. At first, adapting to these changes was difficult, but over time, I began to grasp the nuances of 3D physics and camera movement. Additionally, working in a 3D environment meant considering optimization techniques for better performance. Modeling assets efficiently, adjusting lighting, and handling collision detection in large open spaces all became essential parts of the development process. As I progressed, I became more comfortable with structuring scripts and refining game logic for a more polished experience.",
           },
           {
-            Title: "Design",
+            Title: "Learnings",
             Description:
               "Through Wanderer, I gained valuable technical skills that helped shape my understanding of game development. Some of my key takeaways include:",
           },
