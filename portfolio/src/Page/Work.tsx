@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import { projects } from "../Data/projects";
-// import PhotoStagnantContainer from "../Components/PhotoStagnantContainer.tsx";
+
 import styled from "styled-components";
-import HorizontalWorkSuggestion from "../Components/HorizontalWorkSuggestion.tsx";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import journeycar from "../lottieAnimations/Journey.json";
+import processThoughts from "../lottieAnimations/process.json";
 type DetailComponentProps = {
   Title: string;
   Description: string;
@@ -20,7 +22,7 @@ function DetailComponent({ Title, Description }: DetailComponentProps) {
   return (
     <DetailComponentStyle>
       <h1>{Title}</h1>
-      <h1>{Description}</h1>
+      <h3>{Description}</h3>
     </DetailComponentStyle>
   );
 }
@@ -53,7 +55,6 @@ const media = {
 function Work() {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
-
   // State to track the currently selected image
   const [selectedImage, setSelectedImage] = useState(project?.image || "");
 
@@ -83,7 +84,7 @@ function Work() {
           </ImagesContainer>
         </MainShowCase>
         <div className="GamePoster">
-          <img src={project.image} alt="photo" />
+          <img src={project.BannerImage} alt="photo" />
         </div>
       </MainBanner>
 
@@ -102,12 +103,68 @@ function Work() {
           ))}
         </div>
       </div>
-      <div className="moreWorks">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <h1 key={index}>MORE WORKS</h1>
-        ))}
-      </div>
-      <HorizontalWorkSuggestion GameId={id || ""} />
+      <JourneyAndLearningContainer>
+        <div className="styledJourneyandLearning">
+          <div className="JourneyTitleAndDescription">
+            <h1>{project.SpecifiedDetails[0].ListOfDescriptions[0].Title}</h1>
+            <p>
+              {project.SpecifiedDetails[0].ListOfDescriptions[0].Description}
+            </p>
+          </div>
+
+          <div className="Lottie">
+            <Lottie animationData={journeycar} />
+          </div>
+        </div>
+
+        <div className="styledJourneyandLearningSection2">
+          <div className="Lottie">
+            <Lottie
+              animationData={processThoughts}
+              style={{
+                width: "70%",
+                height: "auto",
+                objectFit: "contain",
+                marginBottom: "2rem",
+              }}
+            />
+          </div>
+
+          <div className="LearningHighlightsContainer">
+            <div>
+              <h1>{project.SpecifiedDetails[0].ListOfDescriptions[1].Title}</h1>
+              <p>
+                {project.SpecifiedDetails[0].ListOfDescriptions[1].Description}
+              </p>
+            </div>
+            <div>
+              {project.SpecifiedDetails[0].LearningsPoints.map(
+                (point, index) => {
+                  return (
+                    <div className="LearningHighlights" key={index}>
+                      <h2>{point.header}</h2>
+                      <p>{point.description}</p>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/*<div className="styledJourneyandLearning">*/}
+        {/*  <p>*/}
+        {/*    {"Learning Qoute: "}*/}
+        {/*    {project.SpecifiedDetails[0].ListOfDescriptions[2].Description}*/}
+        {/*  </p>*/}
+        {/*</div>*/}
+      </JourneyAndLearningContainer>
+      {/*<div className="moreWorks">*/}
+      {/*  {Array.from({ length: 6 }).map((_, index) => (*/}
+      {/*    <h1 key={index}>MORE WORKS</h1>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+      {/*<HorizontalWorkSuggestion GameId={id || ""} />*/}
     </WorkStyleContainer>
   );
 }
@@ -250,6 +307,203 @@ const DetailComponentStyle = styled.div`
     h1 {
       font-size: 1rem;
     }
+
+    h3 {
+      font-size: 0.8rem;
+    }
+  }
+`;
+
+const JourneyAndLearningContainer = styled(motion.div)`
+  height: auto;
+  min-height: 110vh;
+  background-color: white;
+  padding: 7rem 4rem;
+  display: flex;
+  flex-direction: column;
+
+  gap: 4rem;
+
+  .styledJourneyandLearning {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    p {
+      font-size: 1.2rem;
+      font-weight: 400;
+      opacity: 0.6;
+      line-height: 1.5;
+      width: 80%;
+    }
+
+    .JourneyTitleAndDescription {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .Lottie {
+      width: 45%;
+      height: 500px;
+    }
+
+    @media ${media.tablet} {
+      flex-direction: column;
+      gap: 2rem;
+
+      .JourneyTitleAndDescription {
+        width: 100%;
+        h1 {
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      .Lottie {
+        width: 100%;
+        height: 300px;
+      }
+    }
+
+    @media ${media.mobile} {
+      flex-direction: column-reverse;
+      gap: 2rem;
+
+      .JourneyTitleAndDescription {
+        width: 100%;
+        h1 {
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1rem;
+          width: 100%;
+        }
+      }
+
+      .Lottie {
+        width: 100%;
+        height: 300px;
+      }
+    }
+  }
+
+  .styledJourneyandLearningSection2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .LearningHighlightsContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      width: 50%;
+      height: 80%;
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1.2rem;
+        opacity: 0.6;
+        line-height: 1.5;
+      }
+
+      .LearningHighlights {
+        h2 {
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+        p {
+          font-size: 1rem;
+          opacity: 0.6;
+          width: 70%;
+        }
+        margin-bottom: 1rem;
+      }
+    }
+
+    .Lottie {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 100%;
+    }
+
+    @media ${media.tablet} {
+      flex-direction: column;
+      gap: 2rem;
+
+      .LearningHighlightsContainer {
+        width: 100%;
+        h1 {
+          font-size: 2rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        .LearningHighlights {
+          h2 {
+            font-size: 1.2rem;
+          }
+          p {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .Lottie {
+        width: 100%;
+        height: 300px;
+      }
+    }
+
+    @media ${media.mobile} {
+      flex-direction: column;
+      gap: 2rem;
+
+      .LearningHighlightsContainer {
+        width: 100%;
+        h1 {
+          font-size: 2rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        .LearningHighlights {
+          h2 {
+            font-size: 1.2rem;
+          }
+          p {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .Lottie {
+        width: 100%;
+        height: 300px;
+      }
+    }
   }
 `;
 
@@ -279,7 +533,7 @@ const DetailComponentStyle = styled.div`
 // `;
 
 const MainBanner = styled.div`
-  height: 70vh;
+  height: 75vh;
   display: flex;
 
   padding: 2rem 4rem;
